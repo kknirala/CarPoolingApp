@@ -1,7 +1,6 @@
 package edu.mum.wap.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Likes {
 	private int likeId;
@@ -10,10 +9,7 @@ public class Likes {
 	private LocalDate dateCreated;
 	private LocalDate dateUpdated;
 
-	
-	
-	public Likes(int likeId, Users user, Posts post, LocalDate dateCreated,
-			LocalDate dateUpdated) {
+	public Likes(int likeId, Users user, Posts post, LocalDate dateCreated, LocalDate dateUpdated) {
 		this.likeId = likeId;
 		this.user = user;
 		this.post = post;
@@ -60,6 +56,12 @@ public class Likes {
 	public void setDateUpdated(LocalDate dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
-
+	//only for test
+	@Override
+	public String toString() {
+		return "Likes [likeId=" + likeId + ", post=" + post + ", dateCreated=" + dateCreated + ", dateUpdated="
+				+ dateUpdated + "]";
+	}
+	
 
 }

@@ -128,7 +128,7 @@ public class Users {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-
+	//only for test
 	@Override
 	public String toString() {
 		return "Users [userId=" + userId + ", fullName=" + fullName + ", gender=" + gender + ", state=" + state + "]";

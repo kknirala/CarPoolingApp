@@ -26,6 +26,7 @@ public class PostServiceImpl implements IPostService {
 		ps.setString(4, post.getPostType());
 		ps.setDate(5, Date.valueOf(LocalDate.now()));
 		ps.setDate(6, Date.valueOf(LocalDate.now()));
+		ps.execute();
 		return post;
 	}
 
@@ -42,12 +43,13 @@ public class PostServiceImpl implements IPostService {
 		ps = DBConnection.getConnection().conn.prepareStatement("update Posts set post=? where postid=?");
 		ps.setString(1, post.getPostText());
 		ps.setInt(2, post.getPostId());
+		ps.executeUpdate();
 		return post;
 	}
 
 	@Override
 	public Posts findPost(int postId) throws SQLException {
-		ps = DBConnection.getConnection().conn.prepareStatement("select * from Users where userId = ?");
+		ps = DBConnection.getConnection().conn.prepareStatement("select * from posts where postid = ?");
 		ps.setInt(1, postId);
 		ResultSet rs = ps.executeQuery();
 		Posts post = null;

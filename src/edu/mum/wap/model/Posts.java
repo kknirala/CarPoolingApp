@@ -95,6 +95,13 @@ public class Posts {
 		return true;
 	}
 
+	//only for test
+	@Override
+	public String toString() {
+		return "Posts [postId=" + postId + ", user=" + user + ", postText=" + postText + ", postType=" + postType + "]";
+	}
+	
+
 	
 
 }

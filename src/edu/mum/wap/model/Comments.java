@@ -1,7 +1,6 @@
 package edu.mum.wap.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Comments {
 	private int commentId;
@@ -70,6 +69,14 @@ public class Comments {
 	public void setCommentId(int commentId) {
 		this.commentId = commentId;
 	}
+
+	//only for test
+	@Override
+	public String toString() {
+		return "Comments [commentId=" + commentId + ", post=" + post + ", comment=" + comment + ", dateCreated="
+				+ dateCreated + ", dateUpdated=" + dateUpdated + "]";
+	}
+	
 	
 
 }

@@ -29,7 +29,7 @@ public class LikeServiceImpl implements ILikeService {
 		ps.setInt(3, like.getPost().getPostId());
 		ps.setDate(4, Date.valueOf(LocalDate.now()) );
 		ps.setDate(5, Date.valueOf(LocalDate.now()));
-		
+		ps.execute();
 		return like;
 	}
 

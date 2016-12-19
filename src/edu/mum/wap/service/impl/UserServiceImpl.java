@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import edu.mum.wap.datasource.DBConnection;
 import edu.mum.wap.model.Users;
@@ -26,7 +24,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public Users updateUser(Users user) throws SQLException {
-		
+
 		Users oldUser = findUser(user.getUserId());
 		oldUser.setPassword(user.getPassword());
 		oldUser.setCity(user.getCity());
@@ -34,8 +32,9 @@ public class UserServiceImpl implements IUserService {
 		oldUser.setZipCode(user.getZipCode());
 		oldUser.setEmail(user.getEmail());
 		oldUser.setState(user.getState());
-		
-		ps = DBConnection.getConnection().conn.prepareStatement("update Users set password=?, state=?, city=?, street=?, zipcode=?,email=?,dateupdated=? where userId=?");
+
+		ps = DBConnection.getConnection().conn.prepareStatement(
+				"update Users set password=?, state=?, city=?, street=?, zipcode=?,email=?,dateupdated=? where userId=?");
 		ps.setString(1, user.getPassword());
 		ps.setString(2, user.getState());
 		ps.setString(3, user.getCity());
@@ -44,13 +43,13 @@ public class UserServiceImpl implements IUserService {
 		ps.setString(6, user.getEmail());
 		ps.setDate(7, Date.valueOf(LocalDate.now()));
 		ps.setInt(8, user.getUserId());
-		
+
 		ps.executeUpdate();
-		
-		//return updated info
-		
+
+		// return updated info
+
 		return oldUser;
-		
+
 	}
 
 	@Override
