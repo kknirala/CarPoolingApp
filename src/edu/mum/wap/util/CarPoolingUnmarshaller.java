@@ -6,8 +6,6 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import edu.mum.wap.model.FakeUser;
-
 
 public class CarPoolingUnmarshaller {
 

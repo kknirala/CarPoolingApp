@@ -14,9 +14,7 @@ import com.google.gson.Gson;
 
 import edu.mum.wap.model.Posts;
 import edu.mum.wap.service.IPostService;
-import edu.mum.wap.service.IUserService;
 import edu.mum.wap.service.impl.PostServiceImpl;
-import edu.mum.wap.service.impl.UserServiceImpl;
 import edu.mum.wap.util.CarPoolingMarshaller;
 
 
