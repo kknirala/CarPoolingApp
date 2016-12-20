@@ -60,6 +60,7 @@ public class UserController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BufferedReader reader = req.getReader();

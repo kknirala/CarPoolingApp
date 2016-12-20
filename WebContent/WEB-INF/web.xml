@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.4">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" id="WebApp_ID" version="2.4">
   <display-name>ExamEvaluator</display-name>
   <servlet>
-		<description>
+    <description>
 		</description>
-		<display-name>usercontroller</display-name>
-		<servlet-name>usercontroller</servlet-name>
-		<servlet-class>edu.mum.wap.controller.UserController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>usercontroller</servlet-name>
-		<url-pattern>/users/*</url-pattern>
-	</servlet-mapping>
+    <display-name>usercontroller</display-name>
+    <servlet-name>usercontroller</servlet-name>
+    <servlet-class>edu.mum.wap.controller.UserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>usercontroller</servlet-name>
+    <url-pattern>/users/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>
+		</description>
+    <display-name>postcontroller</display-name>
+    <servlet-name>postcontroller</servlet-name>
+    <servlet-class>edu.mum.wap.controller.PostController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>postcontroller</servlet-name>
+    <url-pattern>/posts/*</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
