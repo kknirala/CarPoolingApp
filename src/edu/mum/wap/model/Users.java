@@ -1,7 +1,17 @@
 package edu.mum.wap.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.databind.annotation.*;
+
+
+import edu.mum.wap.util.*;
+
+
+@XmlRootElement
 public class Users {
 	private int userId;
 	private String fullName;
@@ -10,15 +20,21 @@ public class Users {
 	private String city;
 	private String street;
 	private String zipCode;
-	private LocalDate birthYear;
+
+	private Date birthYear;
 	private String email;
 	private String password;
-	private LocalDate dateCreated;
-	private LocalDate dateUpdated;
+
+	private Date dateCreated;
+
+	private Date dateUpdated;
 	
+	
+	public Users() {}
+
 	public Users(int userId, String fullName, String gender, String state, String city, String street,
-			String zipCode, LocalDate birthYear, String email, String password, LocalDate dateCreated,
-			LocalDate dateUpdated) {
+			String zipCode, Date birthYear, String email, String password, Date dateCreated,
+			Date dateUpdated) {
 		this.userId = userId;
 		this.fullName = fullName;
 		this.gender = gender;
@@ -28,6 +44,7 @@ public class Users {
 		this.zipCode = zipCode;
 		this.birthYear = birthYear;
 		this.email = email;
+		
 		this.password = password;
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateUpdated;
@@ -81,14 +98,6 @@ public class Users {
 		this.zipCode = zipCode;
 	}
 
-	public LocalDate getBirthYear() {
-		return birthYear;
-	}
-
-	public void setBirthYear(LocalDate birthYear) {
-		this.birthYear = birthYear;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -105,19 +114,27 @@ public class Users {
 		this.password = password;
 	}
 
-	public LocalDate getDateCreated() {
+	public Date getBirthYear() {
+		return birthYear;
+	}
+
+	public void setBirthYear(Date birthYear) {
+		this.birthYear = birthYear;
+	}
+
+	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(LocalDate dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	public LocalDate getDateUpdated() {
+	public Date getDateUpdated() {
 		return dateUpdated;
 	}
 
-	public void setDateUpdated(LocalDate dateUpdated) {
+	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
 
@@ -129,11 +146,15 @@ public class Users {
 		this.userId = userId;
 	}
 	//only for test
+
 	@Override
 	public String toString() {
-		return "Users [userId=" + userId + ", fullName=" + fullName + ", gender=" + gender + ", state=" + state + "]";
+		return "Users [userId=" + userId + ", fullName=" + fullName + ", gender=" + gender + ", state=" + state
+				+ ", city=" + city + ", street=" + street + ", zipCode=" + zipCode + ", birthYear=" + birthYear
+				+ ", email=" + email + ", password=" + password + ", dateCreated=" + dateCreated + ", dateUpdated="
+				+ dateUpdated + "]";
 	}
-
+	
 	
 
 	

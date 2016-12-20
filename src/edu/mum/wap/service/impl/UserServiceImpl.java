@@ -23,9 +23,15 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public Users updateUser(Users user) throws SQLException {
+	public Users updateUser(Users user) {
 
-		Users oldUser = findUser(user.getUserId());
+		Users oldUser = null;
+		try {
+			oldUser = findUser(user.getUserId());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		oldUser.setPassword(user.getPassword());
 		oldUser.setCity(user.getCity());
 		oldUser.setStreet(user.getStreet());
@@ -33,8 +39,14 @@ public class UserServiceImpl implements IUserService {
 		oldUser.setEmail(user.getEmail());
 		oldUser.setState(user.getState());
 
-		ps = DBConnection.getConnection().conn.prepareStatement(
-				"update Users set password=?, state=?, city=?, street=?, zipcode=?,email=?,dateupdated=? where userId=?");
+		try {
+			ps = DBConnection.getConnection().conn.prepareStatement(
+					"update Users set password=?, state=?, city=?, street=?, zipcode=?,email=?,dateupdated=? where userId=?");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try{
 		ps.setString(1, user.getPassword());
 		ps.setString(2, user.getState());
 		ps.setString(3, user.getCity());
@@ -45,8 +57,12 @@ public class UserServiceImpl implements IUserService {
 		ps.setInt(8, user.getUserId());
 
 		ps.executeUpdate();
+		}
+		catch(Exception e){
+			
+		}
 
-		// return updated info
+		
 
 		return oldUser;
 
@@ -61,9 +77,9 @@ public class UserServiceImpl implements IUserService {
 		if (rs.next()) {
 			System.out.println("User found");
 			user = new Users(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-					rs.getString(6), rs.getString(7), DateToLocalDateUtil.getLocalDate(rs.getDate(8)), rs.getString(9),
-					rs.getString(10), DateToLocalDateUtil.getLocalDate(rs.getDate(11)),
-					DateToLocalDateUtil.getLocalDate(rs.getDate(12)));
+					rs.getString(6), rs.getString(7), rs.getDate(8), rs.getString(9),
+					rs.getString(10), rs.getDate(11),
+					rs.getDate(12));
 		}
 		return user;
 	}
@@ -82,11 +98,11 @@ public class UserServiceImpl implements IUserService {
 			ps.setString(5, user.getCity());
 			ps.setString(6, user.getStreet());
 			ps.setString(7, user.getZipCode());
-			ps.setDate(8, Date.valueOf(user.getBirthYear()));
+			ps.setDate(8, new java.sql.Date(user.getBirthYear().getTime()));
 			ps.setString(9, user.getEmail());
 			ps.setString(10, user.getPassword());
-			ps.setDate(11, Date.valueOf(user.getDateCreated()));
-			ps.setDate(12, Date.valueOf(user.getDateUpdated()));
+			ps.setDate(11, new java.sql.Date(user.getDateCreated().getTime()));
+			ps.setDate(12, new java.sql.Date(user.getDateUpdated().getTime()));
 			ps.execute();
 		} catch (Exception e) {
 			e.printStackTrace();

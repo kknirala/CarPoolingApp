@@ -1,7 +1,13 @@
 package edu.mum.wap.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "posts")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class Posts {
 	private int postId;
 	private Users user;
@@ -11,11 +17,11 @@ public class Posts {
 	 * 	0 - indicate a post for giving a ride
 	 */
 	private String postType;
-	private LocalDate dateCreated;
-	private LocalDate dateUpdated;
+	private Date dateCreated;
+	private Date dateUpdated;
 
-	public Posts(int postId, Users user, String postText, String postType, LocalDate dateCreated,
-			LocalDate dateUpdated) {
+	public Posts(int postId, Users user, String postText, String postType, Date dateCreated,
+			Date dateUpdated) {
 		this.postId = postId;
 		this.user = user;
 		this.postText = postText;
@@ -57,19 +63,20 @@ public class Posts {
 		this.postType = postType;
 	}
 
-	public LocalDate getDateCreated() {
+	
+	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(LocalDate dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	public LocalDate getDateUpdated() {
+	public Date getDateUpdated() {
 		return dateUpdated;
 	}
 
-	public void setDateUpdated(LocalDate dateUpdated) {
+	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
 

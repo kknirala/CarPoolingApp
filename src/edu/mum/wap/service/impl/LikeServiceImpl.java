@@ -13,7 +13,6 @@ import edu.mum.wap.model.Likes;
 import edu.mum.wap.model.Posts;
 import edu.mum.wap.service.ILikeService;
 import edu.mum.wap.service.IPostService;
-import edu.mum.wap.util.DateToLocalDateUtil;
 
 public class LikeServiceImpl implements ILikeService {
 
@@ -50,7 +49,7 @@ public class LikeServiceImpl implements ILikeService {
 		ps.setInt(1, post.getPostId());
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()){
-			postLikes.add(new Likes(rs.getInt(1), post.getUser(), post, DateToLocalDateUtil.getLocalDate(rs.getDate(4)), DateToLocalDateUtil.getLocalDate(rs.getDate(5))));
+			postLikes.add(new Likes(rs.getInt(1), post.getUser(), post, rs.getDate(4), rs.getDate(5)));
 		}
 		return postLikes;
 	}

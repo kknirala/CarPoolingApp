@@ -1,19 +1,23 @@
 package edu.mum.wap.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "comments")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class Comments {
 	private int commentId;
 	private Users user;
 	private Posts post;
 	private String comment;
-	private LocalDate dateCreated;
-	private LocalDate dateUpdated;
+	private Date dateCreated;
+	private Date dateUpdated;
 
-	
-	
-	public Comments(int commentId, Users user, Posts post, String comment, LocalDate dateCreated,
-			LocalDate dateUpdated) {
+	public Comments(int commentId, Users user, Posts post, String comment, Date dateCreated,
+			Date dateUpdated) {
 		this.commentId = commentId;
 		this.user = user;
 		this.post = post;
@@ -46,19 +50,21 @@ public class Comments {
 		this.post = post;
 	}
 	
-	public LocalDate getDateCreated() {
+	
+
+	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(LocalDate dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	public LocalDate getDateUpdated() {
+	public Date getDateUpdated() {
 		return dateUpdated;
 	}
 
-	public void setDateUpdated(LocalDate dateUpdated) {
+	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
 

@@ -10,12 +10,10 @@ import java.util.List;
 
 import edu.mum.wap.datasource.DBConnection;
 import edu.mum.wap.model.Comments;
-import edu.mum.wap.model.Likes;
 import edu.mum.wap.model.Posts;
 import edu.mum.wap.model.Users;
 import edu.mum.wap.service.ICommentService;
 import edu.mum.wap.service.IPostService;
-import edu.mum.wap.util.DateToLocalDateUtil;
 
 public class CommentServiceImpl implements ICommentService {
 
@@ -66,9 +64,9 @@ public class CommentServiceImpl implements ICommentService {
 			post = new PostServiceImpl().findPost(rs.getInt(3));
 
 			comment = new Comments(rs.getInt(1), user, post, rs.getString(4),
-					DateToLocalDateUtil.getLocalDate(rs.getDate(5)), DateToLocalDateUtil.getLocalDate(rs.getDate(6)));
+					rs.getDate(5), rs.getDate(6));
 			post = new Posts(rs.getInt(1), user, rs.getString(3), rs.getString(4),
-					DateToLocalDateUtil.getLocalDate(rs.getDate(5)), DateToLocalDateUtil.getLocalDate(rs.getDate(6)));
+					rs.getDate(5), rs.getDate(6));
 		}
 		return comment;
 	}
@@ -83,7 +81,7 @@ public class CommentServiceImpl implements ICommentService {
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			postComments.add(new Comments(rs.getInt(1), post.getUser(), post, rs.getString(4),
-					DateToLocalDateUtil.getLocalDate(rs.getDate(5)), DateToLocalDateUtil.getLocalDate(rs.getDate(6))));
+					rs.getDate(5), rs.getDate(6)));
 		}
 		return postComments;
 	}

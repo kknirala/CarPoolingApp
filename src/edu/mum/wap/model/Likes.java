@@ -1,15 +1,21 @@
 package edu.mum.wap.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "likes")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class Likes {
 	private int likeId;
 	private Users user;
 	private Posts post;
-	private LocalDate dateCreated;
-	private LocalDate dateUpdated;
+	private Date dateCreated;
+	private Date dateUpdated;
 
-	public Likes(int likeId, Users user, Posts post, LocalDate dateCreated, LocalDate dateUpdated) {
+	public Likes(int likeId, Users user, Posts post, Date dateCreated, Date dateUpdated) {
 		this.likeId = likeId;
 		this.user = user;
 		this.post = post;
@@ -41,21 +47,23 @@ public class Likes {
 		this.post = post;
 	}
 
-	public LocalDate getDateCreated() {
+
+	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(LocalDate dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	public LocalDate getDateUpdated() {
+	public Date getDateUpdated() {
 		return dateUpdated;
 	}
 
-	public void setDateUpdated(LocalDate dateUpdated) {
+	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
+
 	//only for test
 	@Override
 	public String toString() {

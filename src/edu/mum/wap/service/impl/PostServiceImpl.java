@@ -10,7 +10,6 @@ import edu.mum.wap.datasource.DBConnection;
 import edu.mum.wap.model.Posts;
 import edu.mum.wap.model.Users;
 import edu.mum.wap.service.IPostService;
-import edu.mum.wap.util.DateToLocalDateUtil;
 
 public class PostServiceImpl implements IPostService {
 	PreparedStatement ps;
@@ -56,7 +55,7 @@ public class PostServiceImpl implements IPostService {
 		if (rs.next()) {
 			Users user = new UserServiceImpl().findUser(rs.getInt(2));
 			post = new Posts(rs.getInt(1), user, rs.getString(3), rs.getString(4),
-					DateToLocalDateUtil.getLocalDate(rs.getDate(5)), DateToLocalDateUtil.getLocalDate(rs.getDate(6)));
+					rs.getDate(5), rs.getDate(6));
 		}
 		return post;
 	}
