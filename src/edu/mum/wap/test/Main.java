@@ -45,15 +45,15 @@ public class Main {
 		//delete a post
 		
 		//new PostServiceImpl().deletePost(12);
-//		Likes like = new Likes(25, user, post, LocalDate.now(), LocalDate.now());
-//		new LikeServiceImpl().addNewLike(like);
+		Likes like = new Likes(25, user, post, new Date(), new Date());
+		new LikeServiceImpl().addNewLike(like);
 		//find like by post id
 //		List<Likes> likes = new LikeServiceImpl().findLikeByPostId(12);
 //		likes.forEach(e -> System.out.println(e));
 		//new LikeServiceImpl().deleteLike(25);
-		
-	Comments comment = new Comments(23, user, post, "Nice post",  new Date(), new Date());
-		new CommentServiceImpl().addNewComment(comment);
+//		
+//	Comments comment = new Comments(23, user, post, "Nice post",  new Date(), new Date());
+//		new CommentServiceImpl().addNewComment(comment);
 		
 //		System.out.println(new CommentServiceImpl().findComment(23));
 	

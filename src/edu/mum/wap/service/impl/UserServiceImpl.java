@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import edu.mum.wap.datasource.DBConnection;
 import edu.mum.wap.model.Users;
 import edu.mum.wap.service.IUserService;
-import edu.mum.wap.util.DateToLocalDateUtil;
 
 public class UserServiceImpl implements IUserService {
 
