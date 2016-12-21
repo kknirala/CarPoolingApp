@@ -20,13 +20,28 @@ public class PostPageController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String postType = request.getParameter("posttype");
 		int pageSize = Integer.valueOf(request.getPathInfo().substring(1));
 		IPostService postService = new PostServiceImpl();
 		List<Posts> posts = null;
-		try {
-			posts = postService.getPostPerPage(pageSize);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(postType.trim().equals("\"DRIVE\"")){
+			try {
+				System.out.println("------------------------ before drive");
+				posts = postService.getDrivePostPerPage(pageSize);
+				System.out.println("------------------------ drive"+ posts);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
+		if(postType.trim().equals("\"RIDE\""))
+		{
+			try {
+				System.out.println("------------------------after drive"+ posts);
+				posts = postService.getRidePostPerPage(pageSize);
+				System.out.println("------------------------ ride"+ posts);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		String responseText = CarPoolingMarshaller.getJsonFromObject(posts);

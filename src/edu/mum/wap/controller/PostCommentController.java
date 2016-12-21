@@ -28,6 +28,7 @@ public class PostCommentController extends HttpServlet {
 			e.printStackTrace();
 		}	
 		String responseText = CarPoolingMarshaller.getJsonFromObject(comments);
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
 		out.write(responseText);
 	}

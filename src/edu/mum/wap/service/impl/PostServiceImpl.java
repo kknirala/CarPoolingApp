@@ -62,18 +62,35 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public List<Posts> getPostPerPage(int pageSize) throws SQLException {
-
-		List<Posts> postsList = new ArrayList<>();
-		ps = DBConnection.getConnection().conn.prepareStatement("select * from posts limit " + pageSize);
-
+	public List<Posts> getRidePostPerPage(int pageSize) throws SQLException {
+		List<Posts> rideList = new ArrayList<>();
+		ps = DBConnection.getConnection().conn
+				.prepareStatement("select * from posts where posttype=? limit " + pageSize);
+		ps.setString(1, "RIDE");
 		ResultSet rs = ps.executeQuery();
 		Posts post = null;
 		while (rs.next()) {
 			Users user = new UserServiceImpl().findUser(rs.getInt(2));
 			post = new Posts(rs.getInt(1), user, rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6));
-			postsList.add(post);
+			rideList.add(post);
 		}
-		return postsList;
+		return rideList;
 	}
+
+	@Override
+	public List<Posts> getDrivePostPerPage(int pageSize) throws SQLException {
+		List<Posts> driveList = new ArrayList<>();
+		ps = DBConnection.getConnection().conn
+				.prepareStatement("select * from posts where posttype=? limit " + pageSize);
+		ps.setString(1, "DRIVE");
+		ResultSet rs = ps.executeQuery();
+		Posts post = null;
+		while (rs.next()) {
+			Users user = new UserServiceImpl().findUser(rs.getInt(2));
+			post = new Posts(rs.getInt(1), user, rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6));
+			driveList.add(post);
+		}
+		return driveList;
+	}
+
 }

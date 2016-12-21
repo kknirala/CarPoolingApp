@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import edu.mum.wap.model.Likes;
 import edu.mum.wap.service.ILikeService;
 import edu.mum.wap.service.impl.LikeServiceImpl;
-import edu.mum.wap.util.CarPoolingMarshaller;
 
 
 public class PostLikeController extends HttpServlet {
@@ -27,9 +26,10 @@ public class PostLikeController extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		String responseText = CarPoolingMarshaller.getJsonFromObject(likes);
+//		String responseText = CarPoolingMarshaller.getJsonFromObject(likes);
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
-		out.write(responseText);
+		out.write("{\"totallikes\": "+ likes.size()+"}");
 	}
        
     
