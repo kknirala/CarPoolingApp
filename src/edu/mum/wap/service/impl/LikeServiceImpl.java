@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.mum.wap.datasource.DBConnection;
+import edu.mum.wap.model.Comments;
 import edu.mum.wap.model.Likes;
 import edu.mum.wap.model.Posts;
+import edu.mum.wap.model.Users;
 import edu.mum.wap.service.ILikeService;
 import edu.mum.wap.service.IPostService;
 
@@ -52,6 +54,36 @@ public class LikeServiceImpl implements ILikeService {
 			postLikes.add(new Likes(rs.getInt(1), post.getUser(), post, rs.getDate(4), rs.getDate(5)));
 		}
 		return postLikes;
+	}
+
+	@Override
+	public Likes findLikeById(int likeId) throws SQLException {
+		
+		ps = DBConnection.getConnection().conn.prepareStatement("select * from likes where likeid = ?");
+		ps.setInt(1, likeId);
+		ResultSet rs = ps.executeQuery();
+		Likes like = null;
+		Users user = null;
+		Posts post = null;
+		if (rs.next()) {
+			// lazy load dependencies, omitted here
+			user = new UserServiceImpl().findUser(rs.getInt(2));
+			post = new PostServiceImpl().findPost(rs.getInt(3));
+			like = new Likes(rs.getInt(1), user, post, rs.getDate(4), rs.getDate(5));
+		}
+		return like;
+	}
+
+	@Override
+	public int getMaxId() throws SQLException {
+		ps = DBConnection.getConnection().conn.prepareStatement("select max(likeid) from likes");
+		ResultSet rs = ps.executeQuery();
+		int currentMaxindex = 0;
+		if(rs.next()){
+			currentMaxindex = rs.getInt(0);
+			System.out.println("current max value is: "+rs.getInt(0));
+		}
+		return currentMaxindex;
 	}
 
 	
