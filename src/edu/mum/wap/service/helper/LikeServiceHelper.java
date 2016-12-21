@@ -14,8 +14,13 @@ import edu.mum.wap.service.impl.UserServiceImpl;
 public class LikeServiceHelper {
 	public static Likes getLikeFrommapper(LikePostMapper mapper) throws SQLException {
 		Posts post = new PostServiceImpl().findPost(mapper.getPostId());
+		System.out.println("Found post is: "+ post);
 		Users user = new UserServiceImpl().findUser(mapper.getUserId());
-		Likes like = new Likes(new LikeServiceImpl().getMaxId(), user, post, new Date(), new Date());
+		System.out.println("Found user is: "+ user);
+		int maxId = new LikeServiceImpl().getMaxId();
+		System.out.println("Max value found is: "+ maxId);
+		System.out.println();
+		Likes like = new Likes(maxId + 1, user, post, new Date(), new Date());
 		return like;
 	}
 }

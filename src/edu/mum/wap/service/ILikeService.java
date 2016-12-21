@@ -11,4 +11,5 @@ public interface ILikeService {
 	public List<Likes> findLikeByPostId(int postId) throws SQLException;
 	public Likes findLikeById(int likeId) throws SQLException;
 	public int getMaxId() throws SQLException;
+	public int findLikeByUserIdAndPostId(int userId, int postId) throws SQLException;
 }

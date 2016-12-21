@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,26 +26,47 @@ public class LikeController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		BufferedReader reader = request.getReader();
-		System.out.println(reader);
+		String comingresult = reader.lines().collect(Collectors.joining(System.lineSeparator()));
 		Gson gson = new Gson();
-		LikePostMapper likemapper = gson.fromJson(reader, LikePostMapper.class);
+		LikePostMapper likemapper = new LikePostMapper();
+
+		likemapper = gson.fromJson(comingresult, LikePostMapper.class);
 		Likes like = null;
+		ILikeService likeService = new LikeServiceImpl();
+		
+		//check if a post is already liked
+		int likestatus = 0;
+		try {
+			likestatus = likeService.findLikeByUserIdAndPostId(likemapper.getUserId(), likemapper.getPostId());
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
 		try {
 			like = LikeServiceHelper.getLikeFrommapper(likemapper);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		ILikeService likeService = new LikeServiceImpl();
+		//a post is not like yet
+		if(likestatus <= 0){
 		try {
-			
+
 			likeService.addNewLike(like);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		//post already liked so remove it
+		} else{
+			try {
+				likeService.deleteLike(likestatus);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		String responseText = CarPoolingMarshaller.getJsonFromObject(like);
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "POST");
 		PrintWriter out = response.getWriter();
+		
 		out.write(responseText);
 	}
 

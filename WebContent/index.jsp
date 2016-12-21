@@ -8,101 +8,177 @@
 <title>jQuery UI Tabs - Default functionality</title>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="resources/demos/style.css">
+
 <link rel="stylesheet" href="resources/css/main.css">
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script>
-	var numberofPage = 5;
-	$(function() {
-		$("#tabs").tabs();
-
-		/*     $.get("postperpage/"+numberofPage).done(perpagesuccess).fail(ajaxfailure);
-		 */
-		loaduserposts();
-	});
-	function perpagesuccess(data) {
-		var posts = JSON.parse(data);
-		console.log(posts);
-		var content = "<table class=\"table table-hover\"><tbody>";
-		$.each(posts, function(i, post) {
-			content = content + "<tr><td><p>" + post.postText + "</p><p> <em style = \"color: lightblue\"> Last updated" + post.dateCreated +"</em></p></td></tr>";
-		});
-		content = content + "</tbody></table>";
-		$("#tabs-1").append(content);
-	}
-	function loaduserposts() {
-		$.get("postperpage/" + numberofPage).done(perpagesuccess).fail(
-				ajaxfailure);
-	}
-	function ajaxfailure(error) {
-		console.log(error)
-	}
-	function logResults(data) {
-		var x
-	}
-	$(window).scroll(
-			function() {
-				if ($(window).scrollTop() + $(window).height() > $(document)
-						.height() - 100) {
-					numberofPage = numberofPage + 5;
-					$("#tabs-1").empty();
-					loaduserposts();
-				}
-			});
-</script>
+<script src="resources/js/tabDataLoader.js" type="text/javascript"></script>
 </head>
 <body>
-	<div id="tabs">
-		<ul>
-			<li><a href="#tabs-1">Need a ride?</a></li>
-			<li><a href="#tabs-2">Provide a ride?</a></li>
-			<li><a href="#tabs-3">Check weather before you plan</a></li>
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Car Polling System</a>
+		</div>
+		<ul class="nav navbar-nav navbar-right">
+		
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+					<span class="glyphicon glyphicon-user"></span>
+					Profile <span class="caret"></span></a>
+					<div class="dropdown-menu">
+      					<div class="viewprofile"><a class="dropdown-item" href="#">View Profile</a></div>
+      					<div class="editprofile"><a class="dropdown-item" href="#">Edit Profile</a></div>
+      				</div>
+					</li>
+					<li><a href="#">
+					Register</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+					Login</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>
+					Login Out</a></li>
 		</ul>
-		<div id="tabs-1">
-			<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a,
-				risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris.
-				Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem.
-				Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo.
-				Vivamus sed magna quis ligula eleifend adipiscing. Duis orci.
-				Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam
-				molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut
-				dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique
-				tempus lectus.</p>
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">Need a ride?</a></li>
+				<li><a href="#tabs-2">Provide a ride?</a></li>
+				<li><a href="#tabs-3">Check weather before you plan</a></li>
+
+			</ul>
+			<div id="tabs-1">
+			<!--  <a href = "newPost.jsp" class = "glyphicon glyphicon-plus" </a>-->
+			<a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">
+			 <img src="resources/images/complementar1.png" alt="add new post"></a>
+				
+			</div>
+			<div id="tabs-2">
+				
+			</div>
+			<div id="tabs-3">
+				<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse
+					potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque
+					rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante.
+					Class aptent taciti sociosqu ad litora torquent per conubia nostra,
+					per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim
+					commodo pellentesque. Praesent eu risus hendrerit ligula tempus
+					pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a,
+					lacus.</p>
+				<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at,
+					semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra
+					justo vitae neque. Praesent blandit adipiscing velit. Suspendisse
+					potenti. Donec mattis, pede vel pharetra blandit, magna ligula
+					faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque.
+					Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi
+					lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean
+					vehicula velit eu tellus interdum rutrum. Maecenas commodo.
+					Pellentesque nec elit. Fusce in lacus.</p>
+			</div>
 		</div>
-		<div id="tabs-2">
-			<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus
-				gravida ante, ut pharetra massa metus id nunc. Duis scelerisque
-				molestie turpis. Sed fringilla, massa eget luctus malesuada, metus
-				eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet
-				fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam.
-				Praesent in eros vestibulum mi adipiscing adipiscing. Morbi
-				facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut
-				posuere viverra nulla. Aliquam erat volutpat. Pellentesque
-				convallis. Maecenas feugiat, tellus pellentesque pretium posuere,
-				felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris
-				consectetur tortor et purus.</p>
-		</div>
-		<div id="tabs-3">
-			<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse
-				potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque
-				rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante.
-				Class aptent taciti sociosqu ad litora torquent per conubia nostra,
-				per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim
-				commodo pellentesque. Praesent eu risus hendrerit ligula tempus
-				pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a,
-				lacus.</p>
-			<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at,
-				semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra
-				justo vitae neque. Praesent blandit adipiscing velit. Suspendisse
-				potenti. Donec mattis, pede vel pharetra blandit, magna ligula
-				faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque.
-				Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi
-				lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean
-				vehicula velit eu tellus interdum rutrum. Maecenas commodo.
-				Pellentesque nec elit. Fusce in lacus.
+		
+	</div>
+	</nav>
+	
+	
+	<!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <label class="control-label col-sm-2" for="newpost"><strong>New Post </strong></label>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="container">
+
+                        <form class="form-horizontal" action="logincontroller" method="POST">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="firstname">First
+					Name:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="firstname" placeholder="Enter first name" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="lastname">Last
+					Name:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="lastname" placeholder="Enter last name" required>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="from">From:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="source" placeholder="Enter your location" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="to">To:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="destination" placeholder="Enter your destination" required>
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-sm-2" class="row">Gender:</label>
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <label class="radio-inline"> <input name="carpoolType"
+						id="input-gender-male" value="drive" type="radio" required />I am driving
+					</label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label class="radio-inline"> <input name="carpoolType"
+						id="input-gender-female" value="ride" type="radio" required />I need a ride
+					</label>
+
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="dob">Date:</label>
+                                    <div class="col-sm-5">
+                                        <input type="date" class="form-control" id="dob" placeholder="Enter your birth date" required>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="comment">Description:</label>
+                                    <div class="col-sm-5">
+                                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                                    </div>
+                                </div>
+
+                               
+
+                                <div class="col-sm-5 text-center">
+                                    <button type="submit" id="button" class="btn btn-default">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <!--<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>-->
+            </div>
+        </div>
+    </div>
+    </div>
+	
+	
 </body>
 </html>

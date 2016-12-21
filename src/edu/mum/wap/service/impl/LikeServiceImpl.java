@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.mum.wap.datasource.DBConnection;
-import edu.mum.wap.model.Comments;
 import edu.mum.wap.model.Likes;
 import edu.mum.wap.model.Posts;
 import edu.mum.wap.model.Users;
@@ -80,11 +79,26 @@ public class LikeServiceImpl implements ILikeService {
 		ResultSet rs = ps.executeQuery();
 		int currentMaxindex = 0;
 		if(rs.next()){
-			currentMaxindex = rs.getInt(0);
-			System.out.println("current max value is: "+rs.getInt(0));
+			currentMaxindex = rs.getInt(1);
+			System.out.println("current max value is: "+rs.getInt(1));
 		}
 		return currentMaxindex;
 	}
 
-	
+	@Override
+	public int findLikeByUserIdAndPostId(int userId, int postId) throws SQLException {
+		ps = DBConnection.getConnection().conn.prepareStatement("select count(likeid), likeid from likes where userid=? and postid=?");
+		ps.setInt(1, userId);
+		ps.setInt(2, postId);
+		ResultSet rs = ps.executeQuery();
+		int likeStatus = 0;
+		if(rs.next()){
+			likeStatus = rs.getInt(1);
+			System.out.println("Like status is: "+rs.getInt(1));
+		}
+		if(likeStatus == 1){
+			likeStatus = rs.getInt(2);
+		}
+		return likeStatus;
+	}	
 }
