@@ -1,14 +1,8 @@
 package edu.mum.wap.model;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.fasterxml.jackson.databind.annotation.*;
-
-
-import edu.mum.wap.util.*;
 
 
 @XmlRootElement

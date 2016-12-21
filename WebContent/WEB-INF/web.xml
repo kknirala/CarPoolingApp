@@ -67,9 +67,7 @@
     <servlet-name>likecontroller</servlet-name>
     <url-pattern>/likes/*</url-pattern>
   </servlet-mapping>
-  
-  
-   <servlet>
+  <servlet>
     <description>
 		</description>
     <display-name>logincontroller</display-name>
@@ -80,8 +78,19 @@
     <servlet-name>logincontroller</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description>
+		</description>
+    <display-name>postpagecontroller</display-name>
+    <servlet-name>postpagecontroller</servlet-name>
+    <servlet-class>edu.mum.wap.controller.PostPageController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>postpagecontroller</servlet-name>
+    <url-pattern>/postperpage/*</url-pattern>
+  </servlet-mapping>
   <session-config>
-  <session-timeout>15</session-timeout>
+    <session-timeout>15</session-timeout>
   </session-config>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

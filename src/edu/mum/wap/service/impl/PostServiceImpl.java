@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.mum.wap.datasource.DBConnection;
 import edu.mum.wap.model.Posts;
@@ -54,10 +56,24 @@ public class PostServiceImpl implements IPostService {
 		Posts post = null;
 		if (rs.next()) {
 			Users user = new UserServiceImpl().findUser(rs.getInt(2));
-			post = new Posts(rs.getInt(1), user, rs.getString(3), rs.getString(4),
-					rs.getDate(5), rs.getDate(6));
+			post = new Posts(rs.getInt(1), user, rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6));
 		}
 		return post;
 	}
 
+	@Override
+	public List<Posts> getPostPerPage(int pageSize) throws SQLException {
+
+		List<Posts> postsList = new ArrayList<>();
+		ps = DBConnection.getConnection().conn.prepareStatement("select * from posts limit " + pageSize);
+
+		ResultSet rs = ps.executeQuery();
+		Posts post = null;
+		while (rs.next()) {
+			Users user = new UserServiceImpl().findUser(rs.getInt(2));
+			post = new Posts(rs.getInt(1), user, rs.getString(3), rs.getString(4), rs.getDate(5), rs.getDate(6));
+			postsList.add(post);
+		}
+		return postsList;
+	}
 }
