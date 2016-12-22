@@ -1,23 +1,38 @@
+'use strict'
 
-"use strict";
+$(document)
+		.ready(
+				function() {
+					var agealert;
+					
+					$("#agelimitdiv").datepicker();
+					$('#agelimitdiv')
+							.on(
+									'change',
+									function() {
 
-$(function () {
-	var enteredValue = $('#dob').val();
-	var enteredAge = getAge(enteredValue);
-	if( enteredAge < 18 ) {
-	    alert("DOB not valid");
-	    enteredValue.focus();
-	    return false;
-	}
-});
+										var agelimit = 18;
+										var enteredValue = $(this).val();
+										var enteredAge = getAge(enteredValue);
+										if (enteredAge < agelimit) {
+											alert("DOB not valid");
+											// enteredValue.focus();
+											agealert = ("<p> <em style = \"color: red\"> Your age must be above 18 years"
+													+ "</em></p>");
+											agealert.appendTo('#agelimitdiv');
+											return false;
+										}
+									});
+
+				});
 
 function getAge(DOB) {
-    var today = new Date();
-    var birthDate = new Date(DOB);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }    
-    return age;
+	var today = new Date();
+	var birthDate = new Date(DOB);
+	var age = today.getFullYear() - birthDate.getFullYear();
+	var m = today.getMonth() - birthDate.getMonth();
+	if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+		age--;
+	}
+	return age;
 }

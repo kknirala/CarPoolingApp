@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import edu.mum.wap.model.Posts;
-import edu.mum.wap.model.mapper.LikePostMapper;
 import edu.mum.wap.model.mapper.PostMapper;
 import edu.mum.wap.service.IPostService;
 import edu.mum.wap.service.helper.PostServiceHelper;

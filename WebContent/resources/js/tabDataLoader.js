@@ -68,11 +68,45 @@ $(function() {
 				postObj.comment = comment;
 				postObj.postType = postType;
 				if (confirm("Are you sure?")) {
-				$.post(rootPath + "posts", JSON.stringify(postObj)).done(
-						postsuccess).fail(ajaxfailure);
+					$.post(rootPath + "posts", JSON.stringify(postObj)).done(
+							postsuccess).fail(ajaxfailure);
 				}
 				$('#myModal').modal('hide');
 			});
+	// handle new user registration
+
+	$(document).on('click', '#btnsaveuser2', function() {
+		// get values from the form
+		var fullName = $('#fullname').val();
+		var gender = $('input:radio[name=gender]:checked').val();
+		var state = $("#state option:selected").text();
+		var city = $('#city').val();
+		var street = $('#street').val();
+		var zip = $('#zip').val();
+		var birthYear = $('input[type="date"]').val();
+		var email = $('#email').val();
+		var pwd = $('#pwd').val();
+
+		// create object and add values
+
+		var userObj = {};
+		userObj.fullName = fullName;
+		userObj.gender = gender;
+		userObj.state = state;
+		userObj.city = city;
+		userObj.street = street;
+		userObj.zipCode = zip;
+		userObj.email = email;
+		userObj.password = pwd;
+		console.log(street);
+		//dialogue the user if intends to register
+		if (confirm("Are you sure?")) {
+			$.post(rootPath + "users", JSON.stringify(userObj)).done(
+					usersuccess).fail(ajaxfailure);
+		}
+		$('#registerationModal').modal('hide');
+
+	});
 
 	// handle adding new comment
 	$(document).on(
@@ -325,8 +359,6 @@ function updateLikeCount(postid) {
 	});
 }
 function postdeletesuccess() {
-	// remove the element
-
 	console.log("post deleted successfully");
 }
 function postsuccess(data) {
@@ -334,20 +366,13 @@ function postsuccess(data) {
 }
 function commentsuccess() {
 	console.log("comment added successfully");
-	// hide the box after we successfulyl add the comment
-
+}
+function usersuccess(){
+	console.log("user added successfully");
 }
 
-
-
-/* $(window).scroll( function() { 
-	 if ($(window).scrollTop() + $(window).height() >
- $(document) .height() - 100) { numberofpageForRide = numberofpageForRide + 10;
- $("#tabs-1").empty(); loadRidePosts(); 
- } });*/
- $(window).scroll(function() {
-	    if($(window).scrollTop() == $(document).height() - $(window).height()) {
-	    	/*$("#tabs-1").empty();*/ loadRidePosts(); 
-	    }
-	});
- 
+$(window).scroll(function() {
+	if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+		loadRidePosts();
+	}
+});

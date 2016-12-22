@@ -28,7 +28,6 @@ public class UserServiceImpl implements IUserService {
 		try {
 			oldUser = findUser(user.getUserId());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		oldUser.setPassword(user.getPassword());
@@ -107,6 +106,17 @@ public class UserServiceImpl implements IUserService {
 			e.printStackTrace();
 		}
 		return user;
+	}
+
+	@Override
+	public int getMaxId() throws SQLException {
+		ps = DBConnection.getConnection().conn.prepareStatement("select max(userid) from users");
+		ResultSet rs = ps.executeQuery();
+		int currentMaxindex = 0;
+		if(rs.next()){
+			currentMaxindex = rs.getInt(1);
+		}
+		return currentMaxindex;
 	}
 
 }

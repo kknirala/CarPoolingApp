@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import edu.mum.wap.model.Users;
+import edu.mum.wap.model.mapper.UserMapper;
 import edu.mum.wap.service.IUserService;
+import edu.mum.wap.service.helper.UserServiceHelper;
 import edu.mum.wap.service.impl.UserServiceImpl;
 import edu.mum.wap.util.CarPoolingMarshaller;
 
@@ -51,9 +54,18 @@ public class UserController extends HttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BufferedReader reader = req.getReader();
+		String comingresult = reader.lines().collect(Collectors.joining(System.lineSeparator()));
 		Gson gson = new Gson();
-		Users user = gson.fromJson(reader, Users.class);
+		UserMapper usermapper = new UserMapper();
+		usermapper = gson.fromJson(comingresult, UserMapper.class);
 		IUserService userService = new UserServiceImpl();
+		Users user = null;
+		try {
+			user = UserServiceHelper.getPostFrommapper(usermapper);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		//add the user
 		try {
 			userService.updateUser(user);
 		} catch (SQLException e) {
@@ -64,9 +76,18 @@ public class UserController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BufferedReader reader = req.getReader();
+		String comingresult = reader.lines().collect(Collectors.joining(System.lineSeparator()));
 		Gson gson = new Gson();
-		Users user = gson.fromJson(reader, Users.class);
+		UserMapper usermapper = new UserMapper();
+		Users user = null;
+		System.out.println(comingresult);
+		usermapper= gson.fromJson(comingresult, UserMapper.class);
 		IUserService userService = new UserServiceImpl();
+		try {
+			user = UserServiceHelper.getPostFrommapper(usermapper);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		try {
 			userService.addNewUser(user);
 		} catch (SQLException e) {
