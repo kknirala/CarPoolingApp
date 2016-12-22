@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>jQuery UI Tabs - Default functionality</title>
+<title>Carpooling App</title>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -26,19 +26,22 @@
 			<a class="navbar-brand" href="#">Car Polling System</a>
 		</div>
 		<ul class="nav navbar-nav navbar-right">
-		
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					<span class="glyphicon glyphicon-user"></span>
-					Profile <span class="caret"></span></a>
-					<div class="dropdown-menu">
-      					<div class="viewprofile"><a class="dropdown-item" href="#">View Profile</a></div>
-      					<div class="editprofile"><a class="dropdown-item" href="#">Edit Profile</a></div>
-      				</div>
-					</li>
-					<li><a href="#">
-					Register</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+				role="button" aria-haspopup="true" aria-expanded="false"> <span
+					class="glyphicon glyphicon-user"></span> Profile <span
+					class="caret"></span></a>
+				<div class="dropdown-menu">
+					<div class="viewprofile">
+						<a class="dropdown-item" href="#">View Profile</a>
+					</div>
+					<div class="editprofile">
+						<a class="dropdown-item" href="#">Edit Profile</a>
+					</div>
+				</div></li>
+			<li><a href="#"> Register</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
 					Login</a></li>
 			<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>
 					Login Out</a></li>
@@ -51,14 +54,12 @@
 
 			</ul>
 			<div id="tabs-1">
-			<!--  <a href = "newPost.jsp" class = "glyphicon glyphicon-plus" </a>-->
-			<a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">
-			 <img src="resources/images/complementar1.png" alt="add new post"></a>
-				
+				<!--  <a href = "newPost.jsp" class = "glyphicon glyphicon-plus" </a>-->
+				<a href="#myModal" class="btn btn-lg btn-primary"
+					data-toggle="modal"> Add new Post</a>
+
 			</div>
-			<div id="tabs-2">
-				
-			</div>
+			<div id="tabs-2"></div>
 			<div id="tabs-3">
 				<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse
 					potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque
@@ -79,106 +80,68 @@
 					Pellentesque nec elit. Fusce in lacus.</p>
 			</div>
 		</div>
-		
+
 	</div>
 	</nav>
+
+
+	<!--New post Modal -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<label class="control-label col-sm-2" for="newpost"><strong>New
+							Post </strong></label>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+
+					<div class="container">
+
+						<form class="form-horizontal" action="logincontroller"
+							method="POST">
+							<div class="row">
+
+								<label class="control-label col-sm-2" class="row">Service type:</label>
+								<div class="form-group">
+									<div class="col-sm-2">
+										<label class="radio-inline"> <input name="carpoolType"
+											id="input-gender-male" value="DRIVE" type="radio" required />I
+											am driving
+										</label>
+									</div>
+									<div class="col-sm-2">
+										<label class="radio-inline"> <input name="carpoolType"
+											id="input-gender-female" value="RIDE" type="radio" required />I
+											need a ride
+										</label>
+
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="comment">Description:</label>
+									<div class="col-sm-5">
+										<textarea class="form-control" rows="5" id="comment"></textarea>
+									</div>
+								</div>
+								<div class="col-sm-5 text-center">
+									<!--                                     <button type="submit" id="button" class="btn btn-default">Submit</button> -->
+									<input type="button" id="btnnewpost" value="add post" />
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 	
-	
-	<!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <label class="control-label col-sm-2" for="newpost"><strong>New Post </strong></label>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
+	</div>
 
 
-                    <div class="container">
-
-                        <form class="form-horizontal" action="logincontroller" method="POST">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="firstname">First
-					Name:</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="firstname" placeholder="Enter first name" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="lastname">Last
-					Name:</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="lastname" placeholder="Enter last name" required>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="from">From:</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="source" placeholder="Enter your location" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="to">To:</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="destination" placeholder="Enter your destination" required>
-                                    </div>
-                                </div>
-
-                                <label class="control-label col-sm-2" class="row">Gender:</label>
-                                <div class="form-group">
-                                    <div class="col-sm-2">
-                                        <label class="radio-inline"> <input name="carpoolType"
-						id="input-gender-male" value="drive" type="radio" required />I am driving
-					</label>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <label class="radio-inline"> <input name="carpoolType"
-						id="input-gender-female" value="ride" type="radio" required />I need a ride
-					</label>
-
-
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="dob">Date:</label>
-                                    <div class="col-sm-5">
-                                        <input type="date" class="form-control" id="dob" placeholder="Enter your birth date" required>
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="comment">Description:</label>
-                                    <div class="col-sm-5">
-                                        <textarea class="form-control" rows="5" id="comment"></textarea>
-                                    </div>
-                                </div>
-
-                               
-
-                                <div class="col-sm-5 text-center">
-                                    <button type="submit" id="button" class="btn btn-default">Submit</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-                <!--<div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>-->
-            </div>
-        </div>
-    </div>
-    </div>
-	
-	
 </body>
 </html>

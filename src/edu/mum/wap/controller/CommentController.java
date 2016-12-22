@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import edu.mum.wap.model.Comments;
+import edu.mum.wap.model.Likes;
+import edu.mum.wap.model.mapper.CommentMapper;
+import edu.mum.wap.model.mapper.LikePostMapper;
 import edu.mum.wap.service.ICommentService;
+import edu.mum.wap.service.helper.CommentServiceHelper;
 import edu.mum.wap.service.impl.CommentServiceImpl;
 import edu.mum.wap.util.CarPoolingMarshaller;
 
@@ -41,9 +46,18 @@ public class CommentController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Comments comment = null;
 		BufferedReader reader = request.getReader();
+		String comingresult = reader.lines().collect(Collectors.joining(System.lineSeparator()));
 		Gson gson = new Gson();
-		Comments comment = gson.fromJson(reader, Comments.class);
+		CommentMapper commentMapper = new CommentMapper();
+
+		commentMapper = gson.fromJson(comingresult, CommentMapper.class);
+		try {
+			comment = CommentServiceHelper.getCommentFrommapper(commentMapper);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		ICommentService commentService = new CommentServiceImpl();
 		try {
 			commentService.addNewComment(comment);

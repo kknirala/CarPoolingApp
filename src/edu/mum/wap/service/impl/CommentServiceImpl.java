@@ -85,4 +85,16 @@ public class CommentServiceImpl implements ICommentService {
 		}
 		return postComments;
 	}
+
+	@Override
+	public int getMaxId() throws SQLException {
+		ps = DBConnection.getConnection().conn.prepareStatement("select max(commentid) from comments");
+		ResultSet rs = ps.executeQuery();
+		int currentMaxindex = 0;
+		if(rs.next()){
+			currentMaxindex = rs.getInt(1);
+			System.out.println("current max value is: "+rs.getInt(1));
+		}
+		return currentMaxindex;
+	}
 }

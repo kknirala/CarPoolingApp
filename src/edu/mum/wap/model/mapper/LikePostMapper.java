@@ -1,4 +1,4 @@
-package edu.mum.wap.model;
+package edu.mum.wap.model.mapper;
 
 public class LikePostMapper {
 	private int postId;

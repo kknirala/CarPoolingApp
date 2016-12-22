@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import edu.mum.wap.model.LikePostMapper;
 import edu.mum.wap.model.Likes;
+import edu.mum.wap.model.mapper.LikePostMapper;
 import edu.mum.wap.service.ILikeService;
 import edu.mum.wap.service.helper.LikeServiceHelper;
 import edu.mum.wap.service.impl.LikeServiceImpl;

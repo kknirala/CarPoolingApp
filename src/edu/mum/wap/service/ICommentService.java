@@ -11,4 +11,5 @@ public interface ICommentService {
 	public Comments updateComment(Comments comment) throws SQLException;
 	public Comments findComment(int commentId) throws SQLException;
 	public List<Comments> findCommentsByPostId(int postid) throws SQLException;
+	public int getMaxId() throws SQLException;
 }

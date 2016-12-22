@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import edu.mum.wap.model.Posts;
+import edu.mum.wap.model.mapper.LikePostMapper;
+import edu.mum.wap.model.mapper.PostMapper;
 import edu.mum.wap.service.IPostService;
+import edu.mum.wap.service.helper.PostServiceHelper;
 import edu.mum.wap.service.impl.PostServiceImpl;
 import edu.mum.wap.util.CarPoolingMarshaller;
 
@@ -37,8 +41,16 @@ public class PostController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BufferedReader reader = request.getReader();
+		String comingresult = reader.lines().collect(Collectors.joining(System.lineSeparator()));
 		Gson gson = new Gson();
-		Posts post = gson.fromJson(reader, Posts.class);
+		PostMapper mapper = new PostMapper();
+		mapper = gson.fromJson(comingresult, PostMapper.class);
+		Posts post = null;
+		try {
+			post = PostServiceHelper.getPostFrommapper(mapper);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		IPostService postService = new PostServiceImpl();
 		try {
 			postService.addNewPost(post);
@@ -69,6 +81,8 @@ public class PostController extends HttpServlet {
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int postId = Integer.valueOf(req.getPathInfo().substring(1));
+		System.out.println("Deleted?");
+		System.out.println("Post id is"+ postId);
 		IPostService postService = new PostServiceImpl();
 		try {
 			postService.deletePost(postId);

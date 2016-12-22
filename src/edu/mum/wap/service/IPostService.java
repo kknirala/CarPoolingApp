@@ -12,5 +12,6 @@ public interface IPostService {
 	public Posts findPost(int postId) throws SQLException;
 	public List<Posts>getRidePostPerPage(int pageSize) throws SQLException;
 	public List<Posts>getDrivePostPerPage(int pageSize) throws SQLException;
+	public int getMaxId() throws SQLException;
 
 }
