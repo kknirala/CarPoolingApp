@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +22,6 @@ public class LoginController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Under loggedin");
 		boolean isUserAuthenticated = false;
 		ILoginService loginService = new LoginServiceImpl();
 		IUserService  userService = new UserServiceImpl();
@@ -49,7 +47,6 @@ public class LoginController extends HttpServlet {
 				e.printStackTrace();
 			}
 			if ((request.getParameter("rememberme") != null) &&(cookies.length < 4)) {
-				System.out.println("cookie length: "+cookies.length);
 				Cookie streetCookie = new Cookie("street", URLEncoder.encode(user.getStreet(), "UTF-8"));
 				Cookie fullnameCookie = new Cookie("fullname", URLEncoder.encode(user.getFullName(),"UTF-8"));
 				Cookie rememberCookie = new Cookie("rem", URLEncoder.encode(rememberme.trim(),"UTF-8") );
@@ -66,7 +63,6 @@ public class LoginController extends HttpServlet {
 			
 			// set session, and session will expire in 15 minutes
 			HttpSession httpSession = request.getSession();
-			System.out.println("Session has been set");
 			response.sendRedirect("index.jsp");
 			httpSession.setAttribute("userId", user.getUserId());
 			httpSession.setAttribute("fullname", user.getFullName());
@@ -74,7 +70,6 @@ public class LoginController extends HttpServlet {
 			/* RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/pages/profile.jsp");
 			requestDispatcher.forward(request, response);*/
 		} else {
-			System.out.println("Authentication failure.");
 			request.setAttribute("msg", "Authentication failure.");
 			response.sendRedirect("login.jsp");
 		}

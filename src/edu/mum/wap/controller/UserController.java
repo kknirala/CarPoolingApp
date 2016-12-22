@@ -82,7 +82,6 @@ public class UserController extends HttpServlet {
 		UserMapper usermapper = new UserMapper();
 		Users user = null;
 		Users newUser = null;
-		System.out.println(comingresult);
 		usermapper= gson.fromJson(comingresult, UserMapper.class);
 		IUserService userService = new UserServiceImpl();
 		try {
