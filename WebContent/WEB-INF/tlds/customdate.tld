@@ -1,0 +1,22 @@
+<taglib>
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>2.0</jsp-version>
+  <short-name>DateTime Demo</short-name>
+  <uri>carpooling</uri>
+	<tag>
+		<description>Generates Current Date and Time</description>
+		<name>currentDateTime</name>
+		<tag-class>edu.mum.wap.customtags.CustomDate</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>color</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>size</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

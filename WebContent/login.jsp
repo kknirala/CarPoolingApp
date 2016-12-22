@@ -23,7 +23,7 @@
 <body>
 	<div class="container">
 		<div class="headerLogo">
-			<img src="resources/images/letsCarpoolbanner.png" class="headbanner" alt="carpool banner">
+			<a href = "index.jsp" > <img src="resources/images/letsCarpoolbanner.png" class="headbanner" alt="carpool banner"></a>
 		</div>
 		<div class="row">
 			<div class="col-sm-6 col-md-4 col-md-offset-4">

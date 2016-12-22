@@ -28,6 +28,9 @@ $(function() {
 				var postid = $(this).attr('id');
 				var postidreal = parseInt(postid.substring(7));
 				// post can be retrieved from the database
+				//disable
+				$('.likecustomicon').remove();
+				$('#likebtn'+postidreal).prepend("<span class=\"glyphicon likecustomicon glyphicon-thumbs-down\"></span>");
 				var likeObj = {};
 				likeObj.postId = postidreal;
 				likeObj.userId = userId;
@@ -136,7 +139,7 @@ $(function() {
 		var postidreal = parseInt(postid.substring(11));
 		// show the comment box down
 		$('#newcommentDiv' + postidreal).show();
-
+		$('#newcommentbutton-'+postidreal).prepend("<span class=\"glyphicon glyphicon-save\"></span>");
 	});
 
 	/*
@@ -168,38 +171,43 @@ function perpagesuccessdrive(data) {
 						wrapper.append("<div  id='postdiv" + post.postId + "'"
 								+ " class = \"postsection\"></div>");
 						var currentDiv = $('#postdiv' + post.postId);
-						currentDiv.append("<p><strong>" + post.user.fullName
-								+ "</strong>" + " " + post.postId + " "
-								+ post.user.city + " " + post.postType
+						currentDiv.append("<p><strong> Drive with " + post.user.fullName
+								+ "</strong>"
 								+ "</p><p>" + post.postText + "</p>");
 						currentDiv
 								.append("<p> <em style = \"color: lightblue\"> Last updated"
 										+ post.dateCreated + "</em></p>");
 
-						var commentbtn = $('<input/>').attr({
+						var commentbtn = $('<button/>').attr({
 							type : "button",
 							id : post.postId,
-							value : 'comments',
-							'class' : 'commentbtn'
+							value : 'commentsdd',
+							'class' : 'btn btn-default commentbtn',
+							'aria-label':'Left Align'
 						});
+						commentbtn.prepend("<span class=\"glyphicon glyphicon-comment\"></span>");
 						var deletebtn = $('<input/>').attr({
 							type : "button",
 							id : "delete-" + post.postId,
 							value : 'delete',
 							'class' : 'deletebtn'
 						});
-						var deletebtn = $('<input/>').attr({
+						var deletebtn = $('<button/>').attr({
 							type : "button",
 							id : "delete-" + post.postId,
 							value : 'delete',
-							'class' : 'deletebtn'
+							'class' : 'btn btn-default deletebtn',
+							'aria-label':'Left Align'
 						});
-						var newcommentbtn = $('<input/>').attr({
+						deletebtn.prepend("<span class=\"glyphicon glyphicon-remove\"></span>");
+						var newcommentbtn = $('<button/>').attr({
 							type : "button",
 							id : "newcomment-" + post.postId,
 							value : 'New comment',
-							'class' : 'newcomment'
+							'class' : 'btn btn-default newcomment',
+							'aria-label':'Left Align'
 						});
+						newcommentbtn.prepend("<span class=\"glyphicon glyphicon-plus\"></span>");
 
 						// make the above button a link for the modal to work
 
@@ -229,8 +237,10 @@ function perpagesuccessdrive(data) {
 										+ post.postId
 										+ "'"
 										+ " class = \"likecount\"> "
-										+ "<input type = \"button\" class = \"likeaction\" id = 'likebtn"
-										+ post.postId + "' value = \"Like\" />"
+										+ "<button type = \"button\" class = \"likeaction btn btn-default\" aria-label=\"Left Align\"id = 'likebtn"
+										+ post.postId + "' value = \"Like\" >"
+										+ "<span class=\"glyphicon likecustomicon glyphicon-thumbs-up\" aria-hidden=\"true\"></span>"
+										+"</button>"
 										+ " </div>");
 						currentDiv.append("<hr>");
 						wrapper.append(currentDiv);
@@ -239,7 +249,7 @@ function perpagesuccessdrive(data) {
 								function(likes) {
 									var likesJson = JSON.parse(likes);
 									$('#likediv' + post.postId).append(
-											"#Likes:" + likesJson.totallikes);
+											likesJson.totallikes + " travelers are interested by this ride post");
 								}).error(function() {
 							console.log(error);
 						});
@@ -256,33 +266,37 @@ function perpagesuccessride(data) {
 						wrapper.append("<div  id='postdiv" + post.postId + "'"
 								+ " class = \"postsection\"></div>");
 						var currentDiv = $('#postdiv' + post.postId);
-						currentDiv.append("<p><strong>" + post.user.fullName
-								+ " " + post.postId + " " + post.user.city
-								+ " " + post.postType + "</strong>" + "</p><p>"
+						currentDiv.append("<p><strong> Ride needed by  " + post.user.fullName
+								+  "</strong>" + "</p><p>"
 								+ post.postText + "</p>");
 						currentDiv
 								.append("<p> <em style = \"color: lightblue\"> Last updated"
 										+ post.dateCreated + "</em></p>");
 
-						var commentbtn = $('<input/>').attr({
+						var commentbtn = $('<button/>').attr({
 							type : "button",
 							id : post.postId,
-							value : 'comments',
-							'class' : 'commentbtn'
+							value : 'commentsdd',
+							'class' : 'btn btn-default commentbtn',
+							'aria-label':'Left Align'
 						});
-						var deletebtn = $('<input/>').attr({
+						commentbtn.prepend("<span class=\"glyphicon glyphicon-comment\"></span>");
+						var deletebtn = $('<button/>').attr({
 							type : "button",
 							id : "delete-" + post.postId,
 							value : 'delete',
-							'class' : 'deletebtn'
+							'class' : 'btn btn-default deletebtn',
+							'aria-label':'Left Align'
 						});
-
-						var newcommentbtn = $('<input/>').attr({
+						deletebtn.prepend("<span class=\"glyphicon glyphicon-remove\"></span>");
+						var newcommentbtn = $('<button/>').attr({
 							type : "button",
 							id : "newcomment-" + post.postId,
 							value : 'New comment',
-							'class' : 'newcomment'
+							'class' : 'btn btn-default newcomment',
+							'aria-label':'Left Align'
 						});
+						newcommentbtn.prepend("<span class=\"glyphicon glyphicon-plus\"></span>");
 
 						// make the above button a link for the modal to work
 
@@ -313,8 +327,11 @@ function perpagesuccessride(data) {
 										+ post.postId
 										+ "'"
 										+ " class = \"likecount\"> "
-										+ "<input type = \"button\" class = \"likeaction\" id = 'likebtn"
-										+ post.postId + "' value = \"Like\" />"
+										+ "<button type = \"button\" class = \"likeaction btn btn-default\" aria-label=\"Left Align\"id = 'likebtn"
+										+ post.postId + "' value = \"Like\" >"
+										+ "<span class=\"glyphicon likecustomicon glyphicon-thumbs-up\" aria-hidden=\"true\"></span>"
+										+"</button>"
+										
 										+ " </div>");
 						currentDiv.append("<hr>");
 						wrapper.append(currentDiv);
@@ -322,14 +339,14 @@ function perpagesuccessride(data) {
 								function(likes) {
 									var likesJson = JSON.parse(likes);
 									$('#likediv' + post.postId).append(
-											"#Likes:" + likesJson.totallikes);
+											likesJson.totallikes + " drivers are interested by this post ");
 								}).error(function() {
 							console.log(error);
 						});
 					});
 	$('.newcommentsection').hide(); // hide after all is loaded
 
-	//authenticate some components
+	//authenticate some components, could be optimized better
 	if(userId.length == 0){
 		$('.deletebtn').remove();
 		$('.newcomment').remove();
@@ -337,6 +354,9 @@ function perpagesuccessride(data) {
 		$('.btn-primary').remove();
 		$('#myModal').remove();
 	}
+	//
+	$('.commentbuttonsection').prepend("<span class=\"glyphicon glyphicon-save\"></span>");
+	
 }
 function commentsSuccess(commentsResult) {
 	var comments = JSON.parse(commentsResult);

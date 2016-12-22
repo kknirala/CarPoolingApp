@@ -7,11 +7,24 @@
 .commentsection{
     background-color: lightblue;
 }
-a{
-	color: white !important;
+#tabs{
+	margin-right: 100px;
+	margin-left: 100px;
 }
-div#registerdiv {
-    margin-top: 15PX;
-    font-size: 14px;
-    font-weight: BOLD;
+.navbar {
+    border-radius: 4px;
+    background-color: #e0f3fa;
+}
+.ui-widget-content{
+	border: 0px !important;
+	background-color: #f8f6f6;
+}
+.commentsection {
+    background-color: #f7eff8;
+}
+#addnewpostbutton{
+	float:right;
+}
+.likesection{
+	font-style: italic;
 }
