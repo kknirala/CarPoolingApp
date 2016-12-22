@@ -21,8 +21,9 @@
 <script src="resources/js/tabDataLoader.js" type="text/javascript"></script>
 </head>
 <body>
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-default">
 	<div class="container-fluid">
+	
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">Car Polling System</a>
 		</div>
@@ -58,7 +59,7 @@
 				
 				</c:if>
 			<c:if test="${fullname == null}">
-			<li><a href="#"> Register</a></li>
+			<li><div id = "registerdiv" style = "margin-top: 15px"><a href="#registerationModal" id = "registermodallink" data-toggle="modal"> Register</a></div></li>
 			<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>
 					Login</a></li>
 			</c:if>
@@ -82,23 +83,7 @@
 			</div>
 			<div id="tabs-2"></div>
 			<div id="tabs-3">
-				<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse
-					potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque
-					rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante.
-					Class aptent taciti sociosqu ad litora torquent per conubia nostra,
-					per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim
-					commodo pellentesque. Praesent eu risus hendrerit ligula tempus
-					pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a,
-					lacus.</p>
-				<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at,
-					semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra
-					justo vitae neque. Praesent blandit adipiscing velit. Suspendisse
-					potenti. Donec mattis, pede vel pharetra blandit, magna ligula
-					faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque.
-					Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi
-					lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean
-					vehicula velit eu tellus interdum rutrum. Maecenas commodo.
-					Pellentesque nec elit. Fusce in lacus.</p>
+			
 			</div>
 		</div>
 
@@ -157,6 +142,175 @@
 					</div>
 
 				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Registration modal -->
+	<div class="modal fade" id="registerationModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<label class="control-label col-sm-2" for="newpost"><strong>New user registration</strong></label>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+
+					<div class="container">
+
+						<form class="form-horizontal" action="logincontroller"
+							method="POST">
+							<div class="row">
+							
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="lastname">Full Name:</label>
+										<div class="col-sm-5">
+											<input type="text" class="form-control" id="fullname"
+												placeholder="Enter full name" required>
+										</div>
+									</div>
+
+									<label class="control-label col-sm-2" class="row">Gender:</label>
+									<div class="form-group">
+										<div class="col-sm-2">
+											<label class="radio-inline"> <input name="gender"
+												id="input-gender-male" value="Male" type="radio" required />Male
+											</label>
+										</div>
+										<div class="col-sm-2">
+											<label class="radio-inline"> <input name="gender"
+												id="input-gender-female" value="Female" type="radio"
+												required />Female
+											</label>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="state">State</label>
+										<div class="col-sm-5">
+											<select class="form-control" id="state" name="state" required>
+												<option value="">N/A</option>
+												<option value="AK">Alaska</option>
+												<option value="AL">Alabama</option>
+												<option value="AR">Arkansas</option>
+												<option value="AZ">Arizona</option>
+												<option value="CA">California</option>
+												<option value="CO">Colorado</option>
+												<option value="CT">Connecticut</option>
+												<option value="DC">District of Columbia</option>
+												<option value="DE">Delaware</option>
+												<option value="FL">Florida</option>
+												<option value="GA">Georgia</option>
+												<option value="HI">Hawaii</option>
+												<option value="IA">Iowa</option>
+												<option value="ID">Idaho</option>
+												<option value="IL">Illinois</option>
+												<option value="IN">Indiana</option>
+												<option value="KS">Kansas</option>
+												<option value="KY">Kentucky</option>
+												<option value="LA">Louisiana</option>
+												<option value="MA">Massachusetts</option>
+												<option value="MD">Maryland</option>
+												<option value="ME">Maine</option>
+												<option value="MI">Michigan</option>
+												<option value="MN">Minnesota</option>
+												<option value="MO">Missouri</option>
+												<option value="MS">Mississippi</option>
+												<option value="MT">Montana</option>
+												<option value="NC">North Carolina</option>
+												<option value="ND">North Dakota</option>
+												<option value="NE">Nebraska</option>
+												<option value="NH">New Hampshire</option>
+												<option value="NJ">New Jersey</option>
+												<option value="NM">New Mexico</option>
+												<option value="NV">Nevada</option>
+												<option value="NY">New York</option>
+												<option value="OH">Ohio</option>
+												<option value="OK">Oklahoma</option>
+												<option value="OR">Oregon</option>
+												<option value="PA">Pennsylvania</option>
+												<option value="PR">Puerto Rico</option>
+												<option value="RI">Rhode Island</option>
+												<option value="SC">South Carolina</option>
+												<option value="SD">South Dakota</option>
+												<option value="TN">Tennessee</option>
+												<option value="TX">Texas</option>
+												<option value="UT">Utah</option>
+												<option value="VA">Virginia</option>
+												<option value="VT">Vermont</option>
+												<option value="WA">Washington</option>
+												<option value="WI">Wisconsin</option>
+												<option value="WV">West Virginia</option>
+												<option value="WY">Wyoming</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="city">City:</label>
+										<div class="col-sm-5">
+											<input type="text" class="form-control" id="city"
+												placeholder="Enter city" required>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="street">Street:</label>
+										<div class="col-sm-5">
+											<input type="text" class="form-control" id="street"
+												placeholder="Enter street" required>
+										</div>
+									</div>
+
+
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="zip">Zip
+											Code:</label>
+										<div class="col-sm-5">
+											<input type="text" class="form-control" id="zip"
+												placeholder="Enter zip code" required>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="dob">Birth
+											Date:</label>
+										<div class="col-sm-5">
+											<input type="date" class="form-control" id="dob"
+												placeholder="Enter your birth date" required>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="email">Email:</label>
+										<div class="col-sm-5">
+											<input type="email" class="form-control" id="email" required>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-2" for="pwd">Password:</label>
+										<div class="col-sm-5">
+											<input type="password" class="form-control" id="pwd" required>
+												<!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+												title="password should be at least 6 letters and have at least one capital letter, one small letter,
+one number" -->
+												
+										</div>
+									</div>
+
+								<div class="col-sm-5 text-center">
+									<input type="button" id="btnsaveuser2" value = "Register"/>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</div>
+				<!--<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>-->
 			</div>
 		</div>
 	</div>

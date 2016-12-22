@@ -99,6 +99,7 @@ public class UserController extends HttpServlet {
 		HttpSession httpSession = req.getSession();
 		httpSession.setAttribute("userId", newUser.getUserId());
 		httpSession.setAttribute("fullname", newUser.getFullName());
+		httpSession.setAttribute("city", user.getCity());
 
 		resp.sendRedirect("index.jsp");
 		/*String responseText = CarPoolingMarshaller.getJsonFromObject(user);

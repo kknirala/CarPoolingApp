@@ -70,6 +70,7 @@ public class LoginController extends HttpServlet {
 			response.sendRedirect("index.jsp");
 			httpSession.setAttribute("userId", user.getUserId());
 			httpSession.setAttribute("fullname", user.getFullName());
+			httpSession.setAttribute("city", user.getCity());
 			/* RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/pages/profile.jsp");
 			requestDispatcher.forward(request, response);*/
 		} else {
