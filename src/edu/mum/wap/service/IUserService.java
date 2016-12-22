@@ -11,4 +11,5 @@ public interface IUserService {
 	public Users updateUser(Users user) throws SQLException;
 	public Users findUser(int id) throws SQLException;
 	public int getMaxId() throws SQLException;
+	public Users findUserByUsername(String username) throws SQLException;
 }

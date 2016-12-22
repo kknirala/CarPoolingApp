@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,8 +26,19 @@
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">Car Polling System</a>
 		</div>
+		
+<!-- 		Catch session and other attributes
+ -->	
+	 <% String fullname = (String)session.getAttribute("fullname");
+	 request.setAttribute("fullname", fullname);
+	 Integer userId = (Integer)session.getAttribute("userId");
+	 request.setAttribute("userId", userId);
+	 %>
+	
+	 
+ 		<input type = "hidden" id = "useridhidden" value="${userId}" />
 		<ul class="nav navbar-nav navbar-right">
-
+		<c:if test="${fullname != null}">
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 				role="button" aria-haspopup="true" aria-expanded="false"> <span
@@ -37,14 +49,23 @@
 						<a class="dropdown-item" href="#">View Profile</a>
 					</div>
 					<div class="editprofile">
+						<a class="dropdown-item" href="#">Hello <%= session.getAttribute("loggedinuser") %></a>
+					</div>
+					<div class="editprofile">
 						<a class="dropdown-item" href="#">Edit Profile</a>
 					</div>
 				</div></li>
+				
+				</c:if>
+			<c:if test="${fullname == null}">
 			<li><a href="#"> Register</a></li>
-			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+			<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>
 					Login</a></li>
-			<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>
+			</c:if>
+			<c:if test="${fullname != null}">
+			<li><a href="login?logout = true"><span class="glyphicon glyphicon-log-out"></span>
 					Login Out</a></li>
+			</c:if>
 		</ul>
 		<div id="tabs">
 			<ul>

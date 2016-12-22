@@ -4,13 +4,14 @@ var numberofpageForRide = 10;
 var numberofpageForDrive = 10;
 var rootPath = "";
 var postid;
+var userId;
 $(function() {
 	$("#tabs").tabs();
-
+	//initialize user id
+	userId = $('#useridhidden').val();
 	// could be optimized better
 	loadDriverPosts();
 	loadRidePosts();
-
 	// handle comments for the posts
 	$(document).on(
 			'click',
@@ -29,7 +30,7 @@ $(function() {
 				// post can be retrieved from the database
 				var likeObj = {};
 				likeObj.postId = postidreal;
-				likeObj.userId = 20;
+				likeObj.userId = userId;
 				$.post(rootPath + "likes", JSON.stringify(likeObj)).done(
 						likesuccess).fail(ajaxfailure);
 
@@ -63,8 +64,7 @@ $(function() {
 				var postObj = {};
 				var postType = $("input[name=carpoolType]:checked").val();
 				var comment = $('#comment').val();
-				var userId = 10;
-				postObj.userId = 10;
+				postObj.userId = userId;
 				postObj.comment = comment;
 				postObj.postType = postType;
 				if (confirm("Are you sure?")) {
@@ -105,7 +105,7 @@ $(function() {
 					usersuccess).fail(ajaxfailure);
 		}
 		$('#registerationModal').modal('hide');
-
+		window.location.replace("index.jsp");
 	});
 
 	// handle adding new comment
@@ -116,8 +116,8 @@ $(function() {
 				var postid = $(this).attr('id');
 				var postidreal = parseInt(postid.substring(17));
 				var commentObj = {};
-				var userId = 10;
-				var postId = postidreal;
+/*				var userId = 10;
+*/				var postId = postidreal;
 				var comment = $('#commenttext-' + postidreal).val();
 				commentObj.userId = userId;
 				commentObj.postId = postId;
@@ -328,6 +328,15 @@ function perpagesuccessride(data) {
 						});
 					});
 	$('.newcommentsection').hide(); // hide after all is loaded
+
+	//authenticate some components
+	if(userId.length == 0){
+		$('.deletebtn').remove();
+		$('.newcomment').remove();
+		$('.likeaction').remove();
+		$('.btn-primary').remove();
+		$('#myModal').remove();
+	}
 }
 function commentsSuccess(commentsResult) {
 	var comments = JSON.parse(commentsResult);
@@ -369,6 +378,8 @@ function commentsuccess() {
 }
 function usersuccess(){
 	console.log("user added successfully");
+	window.opener.location = "index.jsp";
+	window.close();
 }
 
 $(window).scroll(function() {

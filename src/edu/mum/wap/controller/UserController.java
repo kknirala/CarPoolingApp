@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -80,6 +81,7 @@ public class UserController extends HttpServlet {
 		Gson gson = new Gson();
 		UserMapper usermapper = new UserMapper();
 		Users user = null;
+		Users newUser = null;
 		System.out.println(comingresult);
 		usermapper= gson.fromJson(comingresult, UserMapper.class);
 		IUserService userService = new UserServiceImpl();
@@ -89,12 +91,19 @@ public class UserController extends HttpServlet {
 			e1.printStackTrace();
 		}
 		try {
-			userService.addNewUser(user);
+			newUser = userService.addNewUser(user);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String responseText = CarPoolingMarshaller.getJsonFromObject(user);
+		//create an httpsession for this user
+		HttpSession httpSession = req.getSession();
+		httpSession.setAttribute("userId", newUser.getUserId());
+		httpSession.setAttribute("fullname", newUser.getFullName());
+
+		resp.sendRedirect("index.jsp");
+		/*String responseText = CarPoolingMarshaller.getJsonFromObject(user);
 		PrintWriter out = resp.getWriter();
-		out.write(responseText);
+		out.write(responseText);*/
+		
 	}
 }

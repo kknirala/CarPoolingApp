@@ -32,7 +32,6 @@ public final class DBConnection {
     
     
     public static synchronized DBConnection getConnection() throws SQLException {
-    	System.out.println("db is" + db);
         if ( db == null ) {
             db = new DBConnection();
         }

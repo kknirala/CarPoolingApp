@@ -26,9 +26,7 @@ public class PostPageController extends HttpServlet {
 		List<Posts> posts = null;
 		if(postType.trim().equals("\"DRIVE\"")){
 			try {
-				System.out.println("------------------------ before drive");
 				posts = postService.getDrivePostPerPage(pageSize);
-				System.out.println("------------------------ drive"+ posts);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -36,9 +34,7 @@ public class PostPageController extends HttpServlet {
 		if(postType.trim().equals("\"RIDE\""))
 		{
 			try {
-				System.out.println("------------------------after drive"+ posts);
 				posts = postService.getRidePostPerPage(pageSize);
-				System.out.println("------------------------ ride"+ posts);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

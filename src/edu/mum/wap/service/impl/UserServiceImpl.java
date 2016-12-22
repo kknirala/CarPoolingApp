@@ -73,7 +73,6 @@ public class UserServiceImpl implements IUserService {
 		ResultSet rs = ps.executeQuery();
 		Users user = null;
 		if (rs.next()) {
-			System.out.println("User found");
 			user = new Users(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
 					rs.getString(6), rs.getString(7), rs.getDate(8), rs.getString(9),
 					rs.getString(10), rs.getDate(11),
@@ -117,6 +116,21 @@ public class UserServiceImpl implements IUserService {
 			currentMaxindex = rs.getInt(1);
 		}
 		return currentMaxindex;
+	}
+
+	@Override
+	public Users findUserByUsername(String username) throws SQLException {
+		ps = DBConnection.getConnection().conn.prepareStatement("select * from Users where email = ?");
+		ps.setString(1, username);
+		ResultSet rs = ps.executeQuery();
+		Users user = null;
+		if (rs.next()) {
+			user = new Users(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+					rs.getString(6), rs.getString(7), rs.getDate(8), rs.getString(9),
+					rs.getString(10), rs.getDate(11),
+					rs.getDate(12));
+		}
+		return user;
 	}
 
 }

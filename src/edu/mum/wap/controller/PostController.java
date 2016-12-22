@@ -80,8 +80,6 @@ public class PostController extends HttpServlet {
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int postId = Integer.valueOf(req.getPathInfo().substring(1));
-		System.out.println("Deleted?");
-		System.out.println("Post id is"+ postId);
 		IPostService postService = new PostServiceImpl();
 		try {
 			postService.deletePost(postId);
