@@ -96,11 +96,12 @@ public class UserController extends HttpServlet {
 		}
 		//create an httpsession for this user
 		HttpSession httpSession = req.getSession();
+		resp.sendRedirect("index.jsp");
 		httpSession.setAttribute("userId", newUser.getUserId());
 		httpSession.setAttribute("fullname", newUser.getFullName());
 		httpSession.setAttribute("city", user.getCity());
-
-		resp.sendRedirect("index.jsp");
+		
+		
 		/*String responseText = CarPoolingMarshaller.getJsonFromObject(user);
 		PrintWriter out = resp.getWriter();
 		out.write(responseText);*/

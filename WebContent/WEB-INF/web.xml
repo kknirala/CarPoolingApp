@@ -89,6 +89,17 @@
     <servlet-name>postpagecontroller</servlet-name>
     <url-pattern>/postperpage/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description>
+		</description>
+    <display-name>postcountcontroller</display-name>
+    <servlet-name>postcountcontroller</servlet-name>
+    <servlet-class>edu.mum.wap.controller.PostCountController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>postcountcontroller</servlet-name>
+    <url-pattern>/postcount/*</url-pattern>
+  </servlet-mapping>
   <session-config>
     <session-timeout>15</session-timeout>
   </session-config>

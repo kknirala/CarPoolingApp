@@ -21,8 +21,6 @@ public class PostServiceImpl implements IPostService {
 
 		ps = DBConnection.getConnection().conn.prepareStatement(
 				"insert into Posts (postid, userid, post, posttype, datecreated, dateupdated) values(?,?,?,?,?,?)");
-		System.out.println("-------------------------------------------");
-		System.out.println("Post is: "+ post.getPostType());
 		ps.setInt(1, post.getPostId());
 		ps.setInt(2, post.getUser().getUserId());
 		ps.setString(3, post.getPostText());
@@ -105,5 +103,17 @@ public class PostServiceImpl implements IPostService {
 			System.out.println("current max value is: "+rs.getInt(1));
 		}
 		return currentMaxindex;
+	}
+
+	@Override
+	public int getNumberOfPosts() throws SQLException {
+		ps = DBConnection.getConnection().conn.prepareStatement("select count(postid) from posts");
+		ResultSet rs = ps.executeQuery();
+		int totalnumberofposts = 0;
+		if(rs.next()){
+			totalnumberofposts = rs.getInt(1);
+			System.out.println("current max value is: "+rs.getInt(1));
+		}
+		return totalnumberofposts;
 	}
 }
