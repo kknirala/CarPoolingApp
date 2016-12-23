@@ -1,6 +1,5 @@
 package edu.mum.wap.model.mapper;
 
-import java.util.Date;
 
 public class UserMapper {
 

@@ -62,7 +62,7 @@ public class UserController extends HttpServlet {
 		IUserService userService = new UserServiceImpl();
 		Users user = null;
 		try {
-			user = UserServiceHelper.getPostFrommapper(usermapper);
+			user = UserServiceHelper.getUserFrommapper(usermapper);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -85,7 +85,7 @@ public class UserController extends HttpServlet {
 		usermapper= gson.fromJson(comingresult, UserMapper.class);
 		IUserService userService = new UserServiceImpl();
 		try {
-			user = UserServiceHelper.getPostFrommapper(usermapper);
+			user = UserServiceHelper.getUserFrommapper(usermapper);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
