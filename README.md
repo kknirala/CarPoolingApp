@@ -1,7 +1,8 @@
 #Backend notes
 ##Restful services
 	This web app is entirely restful, which required JSON data for all http requests.
-	It also returns JSON data for all type of requests. Complete API documentation is not given here but could be checked using the paths stated in the next section.
+	It also returns JSON data for all type of requests. 
+	Complete API documentation is not given here but could be checked using the paths stated in the next section.
 
 ##Backend application packages
 
@@ -79,7 +80,8 @@
 #### PostMapper class
 	Used to map userid, comment text and post type from an incoming post id when a new post is added from frontend.
 #### UserMapper class
-	Used to fullname, gender, state, city, street, zip, email and password when a new user is being added. Note, this mapper is used as the createddate and updated date is taken from the server.
+	Used map to fullname, gender, state, city, street, zip, email and password when 
+	a new user is being added. Note, this mapper is used as the createddate and updated date is taken from the server.
 ### Service package
 #### ICommentService
 	An interface containing the following methods..
@@ -135,13 +137,16 @@
 	Contains implementation of the interfaces stated above
 ### Utility classes
 	Contains three classes
-		CarPoolingMarshaller - Used to return a JSON data from a Java object
-		CarPoolingUnMarshaller - Used to return Java object from JSON(not used in this project though - used gson of google instead)	
-		DateToLocaDateUtil - Used to convert Java 8 dates to Java 7 date in preparedStatement of sql
+	CarPoolingMarshaller - Used to return a JSON data from a Java object
+	CarPoolingUnMarshaller - Used to return Java object from JSON(not used in this project though - used gson of google instead)	
+	DateToLocaDateUtil - Used to convert Java 8 dates to Java 7 date in preparedStatement of sql
 		
 ## Application security
 ### Session and cookie management
-	When new user is registed for the first time, they will be automatically logged in. The system will create a new session for this user. The session data will expire in 15 minutes if user remain inactive. When users logged in the next time, a session will be set for 15 days. Up on checking the remember me option, they can avoid typing login information everytime they access the system.
+	When new user is registed for the first time, they will be automatically logged in. 	The system will create a new session for this user. 
+	The session data will expire in 15 minutes if user remain inactive. 
+	When users logged in the next time, a session will be set for 15 days. 
+	Up on checking the remember me option, they can avoid typing login information everytime they access the system.
 
 	
       
