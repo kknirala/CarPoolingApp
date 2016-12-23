@@ -5,6 +5,7 @@ var numberofpageForDrive = 10;
 var rootPath = "";
 var postid;
 var userId;
+var availablenumberofposts;
 $(function() {
 	$("#tabs").tabs();
 	//initialize user id
@@ -12,6 +13,19 @@ $(function() {
 	// could be optimized better
 	loadDriverPosts();
 	loadRidePosts();
+	
+	//hidden alert
+	$('#postnotifier').hide();
+	
+	//initialize variables
+	$.get(rootPath + "postcount").success(function(data){
+		var dataObj = JSON.parse(data);
+		availablenumberofposts = dataObj.numberofposts;
+		console.log("When we start, posts number is: "+availablenumberofposts);
+		
+	}).error(function(){
+		console.log("Error finding number of posts");
+	})
 	// handle comments for the posts
 	$(document).on(
 			'click',
@@ -141,15 +155,17 @@ $(function() {
 		$('#newcommentDiv' + postidreal).show();
 		$('#newcommentbutton-'+postidreal).prepend("<span class=\"glyphicon glyphicon-save\"></span>");
 	});
-
-	/*
-	 * $(document).on('click', '.dislikeaction', function() { postid =
-	 * $(this).attr('id'); console.log(postid); });
-	 */
-	/*
-	 * $(document).on('load', '.newcommentsection', function(){
-	 * $('.newcommentsection').hide(); });
-	 */
+	
+	//handle notification of a new post
+	setInterval(checkfornewpost, 10000);
+	
+	//reload page when new request comes
+	$(document).on('click', '#postnotifier', function(){
+		$('#postnotifier').hide();
+		//reload posts
+		loadDriverPosts();
+		loadRidePosts();
+	})
 
 });
 
@@ -400,6 +416,26 @@ function usersuccess(){
 	console.log("user added successfully");
 	window.opener.location = "index.jsp";
 	window.close();
+}
+function checkfornewpost(){
+	//send api call
+	$.get(rootPath + "postcount").success(function(data){
+		var dataObj = JSON.parse(data);
+		var receivedPosts = dataObj.numberofposts;
+		console.log(receivedPosts);
+		console.log("when time reached, previous posts is "+ availablenumberofposts);
+		console.log("The new number of post is"+ receivedPosts)
+		if(availablenumberofposts < receivedPosts){
+			console.log("We have got a new post");
+			$('#postnotifier').show();
+			$('#postnotifier').val("You have new post!");
+			availablenumberofposts = receivedPosts;
+		}
+		
+	}).error(function(){
+		console.log("Error finding number of posts");
+	})
+	
 }
 
 $(window).scroll(function() {

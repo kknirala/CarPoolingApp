@@ -25,6 +25,6 @@ public class PostCountController extends HttpServlet {
 			e.printStackTrace();
 		}
 		PrintWriter out = response.getWriter();
-		out.write("{numberofposts:"+ numberofposts+"}");
+		out.write("{\"numberofposts\":"+ numberofposts+"}");
 	}
 }

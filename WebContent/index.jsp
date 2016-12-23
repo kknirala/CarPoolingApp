@@ -27,10 +27,20 @@
 		alt="carpooling logo"> <input type="hidden" id="useridhidden"
 		value="${userId}" />
 	<ul class="nav navbar-nav" style="float: right; margin-right: 100px">
-		<li lass="nav-item"><!-- <div id="registerdiv"
-					style="margin-top: 15px"> -->
-					<a href="http://localhost:8087/CarPoolingApp/weather.jsp" target = "_blank" class="glyphicon glyphicon-cloud" id = "weather" data-toggle="modal"> Check weather</a>
-				<!-- </div> --></li>
+		<li lass="nav-item">
+		
+		<button type="button" id = "postnotifier" class="btn btn-default" aria-label="Left Align">
+  <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+</button>
+<!-- 
+		<input type = "button" id = "postnotifier" /> -->
+		<li lass="nav-item">
+			<!-- <div id="registerdiv"
+					style="margin-top: 15px"> --> <a
+			href="http://localhost:8087/CarPoolingApp/weather.jsp"
+			target="_blank" class="glyphicon glyphicon-cloud" id="weather"
+			data-toggle="modal"> Check weather</a> <!-- </div> -->
+		</li>
 		<c:if test="${fullname != null}">
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
@@ -42,7 +52,7 @@
 						<a class="dropdown-item" href="#">View Profile</a>
 					</div>
 					<div class="editprofile">
-						<a class="dropdown-item" href="#">Hello <%=session.getAttribute("loggedinuser")%></a>
+						<a class="dropdown-item" href="#">Hello <%=session.getAttribute("fullname")%></a>
 					</div>
 					<div class="editprofile">
 						<a class="dropdown-item" href="#">Edit Profile</a>
@@ -50,13 +60,15 @@
 				</div></li>
 
 		</c:if>
-		
+
 		<c:if test="${fullname == null}">
-		
-			<li lass="nav-item"><!-- <div id="registerdiv"
-					style="margin-top: 15px"> -->
-					<a href="#registerationModal" class="glyphicon glyphicon-pencil" id = "registermodallink" data-toggle="modal"> Register</a>
-				<!-- </div> --></li>
+
+			<li lass="nav-item">
+				<!-- <div id="registerdiv"
+					style="margin-top: 15px"> --> <a href="#registerationModal"
+				class="glyphicon glyphicon-pencil" id="registermodallink"
+				data-toggle="modal"> Register</a> <!-- </div> -->
+			</li>
 			<li lass="nav-item"><a href="login.jsp"><span
 					class="glyphicon glyphicon-log-in"></span> Login</a></li>
 		</c:if>
@@ -84,26 +96,26 @@
 		<ul>
 			<li><a href="#tabs-1">Need a ride?</a></li>
 			<li><a href="#tabs-2">Provide a ride?</a></li>
-			
+
 			<!-- 				<li><a href="#tabs-3">Check weather before you plan</a></li>
  -->
 		</ul>
 		<div id="tabs-1">
 			<!--  <a href = "newPost.jsp" class = "glyphicon glyphicon-plus" </a>-->
 			<c:if test="${fullname != null}">
-			<a id = "addnewpostbutton" href="#myModal" class="glyphicon glyphicon-pencil" data-toggle="modal">
-				</a>
-				</c:if>
+				<a id="addnewpostbutton" href="#myModal"
+					class="glyphicon glyphicon-pencil" data-toggle="modal"> </a>
+			</c:if>
 
 		</div>
 		<div id="tabs-2">
-		<c:if test="${fullname != null}">
-			<a id = "addnewpostbutton" href="#myModal" class="glyphicon glyphicon-pencil" data-toggle="modal">
-				</a>
-				</c:if>
-				
+			<c:if test="${fullname != null}">
+				<a id="addnewpostbutton" href="#myModal"
+					class="glyphicon glyphicon-pencil" data-toggle="modal"> </a>
+			</c:if>
+
 		</div>
-		
+
 		<!-- 			<div id="tabs-3"></div>
  -->
 	</div>
@@ -337,16 +349,20 @@ one number" -->
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="container">
-      <div class="page-header">
-      <c:if test="${fullname == null}">
-        Be a member <a href="#registerationModal" class="glyphicon glyphicon-pencil" id = "registermodallink" data-toggle="modal"> Register</a>
-		</c:if>		
-      </div>
-      <p class="lead">Carpool your trip ... cheap price, comfortable drive and ride.  | <carpool:currentDateTime
-				color='lightblue' size='20' /></p>
-    </div>
+		<div class="page-header">
+			<c:if test="${fullname == null}">
+        Be a member <a href="#registerationModal"
+					class="glyphicon glyphicon-pencil" id="registermodallink"
+					data-toggle="modal"> Register</a>
+			</c:if>
+		</div>
+		<p class="lead">
+			Carpool your trip ... cheap price, comfortable drive and ride. |
+			<carpool:currentDateTime color='lightblue' size='20' />
+		</p>
+	</div>
 
 
 </body>
