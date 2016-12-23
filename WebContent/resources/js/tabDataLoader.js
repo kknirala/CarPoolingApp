@@ -14,6 +14,12 @@ $(function() {
 	loadDriverPosts();
 	loadRidePosts();
 	
+	//initialize autoscroll functionality
+	$('.postsection').jscroll({
+	    loadingHtml: '<img src="loading.gif" alt="Loading" /> Loading...',
+	    autoTriggerUntil: 5
+	});
+	
 	//hidden alert
 	$('#postnotifier').hide();
 	
@@ -35,6 +41,7 @@ $(function() {
 				$.get(rootPath + "postcomments/" + postid)
 						.done(commentsSuccess).fail(ajaxfailure);
 			});
+	
 	$(document).on(
 			'click',
 			'.likeaction',
@@ -157,7 +164,7 @@ $(function() {
 	});
 	
 	//handle notification of a new post
-	setInterval(checkfornewpost, 10000);
+	setInterval(checkfornewpost, 130000);
 	
 	//reload page when new request comes
 	$(document).on('click', '#postnotifier', function(){
@@ -166,15 +173,16 @@ $(function() {
 		loadDriverPosts();
 		loadRidePosts();
 	})
-
+	
+	
 });
 
 function loadDriverPosts() {
-	$.get(rootPath + "postperpage/5?posttype=\"DRIVE\"").done(
+	$.get(rootPath + "postperpage/10?posttype=\"DRIVE\"").done(
 			perpagesuccessdrive).fail(ajaxfailure);
 }
 function loadRidePosts() {
-	$.get(rootPath + "postperpage/5?posttype=\"RIDE\"")
+	$.get(rootPath + "postperpage/10?posttype=\"RIDE\"")
 			.done(perpagesuccessride).fail(ajaxfailure);
 }
 function perpagesuccessdrive(data) {
@@ -438,8 +446,8 @@ function checkfornewpost(){
 	
 }
 
-$(window).scroll(function() {
+/*$(window).scroll(function() {
 	if ($(window).scrollTop() == $(document).height() - $(window).height()) {
 		loadRidePosts();
 	}
-});
+});*/
