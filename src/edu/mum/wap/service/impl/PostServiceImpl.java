@@ -62,11 +62,19 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public List<Posts> getRidePostPerPage(int pageSize) throws SQLException {
+	public List<Posts> getRidePostPerPage(int maxpostid) throws SQLException {
 		List<Posts> rideList = new ArrayList<>();
-		ps = DBConnection.getConnection().conn
-				.prepareStatement("select * from posts where posttype=? limit " + pageSize);
-		ps.setString(1, "RIDE");
+		System.out.println("Max id is: "+ maxpostid);
+		if(maxpostid > 0){
+			ps = DBConnection.getConnection().conn
+					.prepareStatement("select * from posts where posttype=? and postId >? limit " + 5);
+			ps.setString(1, "RIDE");
+			ps.setInt(2, maxpostid);
+		} else{
+			ps = DBConnection.getConnection().conn
+					.prepareStatement("select * from posts where posttype=? limit " + 5);
+			ps.setString(1, "RIDE");
+		}
 		ResultSet rs = ps.executeQuery();
 		Posts post = null;
 		while (rs.next()) {
@@ -78,11 +86,20 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public List<Posts> getDrivePostPerPage(int pageSize) throws SQLException {
+	public List<Posts> getDrivePostPerPage(int maxpostid) throws SQLException {
 		List<Posts> driveList = new ArrayList<>();
-		ps = DBConnection.getConnection().conn
-				.prepareStatement("select * from posts where posttype=? limit " + pageSize);
-		ps.setString(1, "DRIVE");
+		System.out.println("Max id is: "+ maxpostid);
+
+		if(maxpostid > 0){
+			ps = DBConnection.getConnection().conn
+					.prepareStatement("select * from posts where posttype=? and postId>? limit " + 7);
+			ps.setString(1, "DRIVE");
+			ps.setInt(2, maxpostid);
+		} else{
+			ps = DBConnection.getConnection().conn
+					.prepareStatement("select * from posts where posttype=? limit " + 7);
+			ps.setString(1, "DRIVE");
+		};
 		ResultSet rs = ps.executeQuery();
 		Posts post = null;
 		while (rs.next()) {

@@ -33,9 +33,11 @@
 						src="resources/images/account.png"
 						alt="">
 					<form class="form-signin" action = "login" method = "post">
-						<input type="text" class="form-control" name = "username" placeholder="Email"
+						<input type="email" class="form-control" name = "username" placeholder="Email"
 							required autofocus></br> <input type="password"
-							class="form-control" name = "password" placeholder="Password" required>
+							class="form-control" name = "password" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+												title="password should be at least 6 letters and have at least one capital letter, one small letter,
+one number">
 						<button class="btn btn-lg btn-primary btn-block" type="submit">
 							Sign in</button>
 						<div class="col-sm-offset-1">
@@ -186,6 +188,7 @@
 									</div>
 
 									<div class="form-group">
+									<div id = "agelimitdiv" style = "color: red; margin-left: 250px"></div>
 										<label class="control-label col-sm-2" for="dob">Birth
 											Date:</label>
 										<div class="col-sm-5">
@@ -204,10 +207,10 @@
 									<div class="form-group">
 										<label class="control-label col-sm-2" for="pwd">Password:</label>
 										<div class="col-sm-5">
-											<input type="password" class="form-control" id="pwd" required>
-												<!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+											<input type="password" class="form-control" id="pwd" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
 												title="password should be at least 6 letters and have at least one capital letter, one small letter,
-one number" -->
+one number" >
+												
 												
 										</div>
 									</div>

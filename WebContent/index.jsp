@@ -363,6 +363,10 @@ one number" -->
 		</p>
 	</div>
 
-
+<footer>
+<div id = "loadingcomponent">
+<img src = "resources/images/loader.gif"/>
+</div>
+</footer>
 </body>
 </html>

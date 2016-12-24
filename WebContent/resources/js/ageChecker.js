@@ -5,14 +5,15 @@ $(document)
 				function() {
 					var agealert;
 					
-					$("#agelimitdiv").datepicker();
-					$('#agelimitdiv')
+/*					$("#agelimitdiv").datepicker();
+*/					$('#dob')
 							.on(
 									'change',
 									function() {
 
 										var agelimit = 18;
 										var enteredValue = $(this).val();
+										console.log("current age is"+enteredValue);
 										var enteredAge = getAge(enteredValue);
 										if (enteredAge < agelimit) {
 											alert("DOB not valid");

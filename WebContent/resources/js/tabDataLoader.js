@@ -5,21 +5,18 @@ var numberofpageForDrive = 10;
 var rootPath = "";
 var postid;
 var userId;
+var maxDrivePostIdRequested = 0;
+var maxRidePostIdRequested = 0;
 var availablenumberofposts;
 $(function() {
 	$("#tabs").tabs();
 	//initialize user id
 	userId = $('#useridhidden').val();
+    $('#loadingcomponent').hide();
 	// could be optimized better
-	loadDriverPosts();
-	loadRidePosts();
-	
-	//initialize autoscroll functionality
-	$('.postsection').jscroll({
-	    loadingHtml: '<img src="loading.gif" alt="Loading" /> Loading...',
-	    autoTriggerUntil: 5
-	});
-	
+	loadDriverPosts(maxDrivePostIdRequested);
+	loadRidePosts(maxRidePostIdRequested);
+
 	//hidden alert
 	$('#postnotifier').hide();
 	
@@ -41,17 +38,26 @@ $(function() {
 				$.get(rootPath + "postcomments/" + postid)
 						.done(commentsSuccess).fail(ajaxfailure);
 			});
-	
+	//handle liking action
 	$(document).on(
 			'click',
 			'.likeaction',
 			function() {
 				var postid = $(this).attr('id');
 				var postidreal = parseInt(postid.substring(7));
+				var spanToInclude;
+				var btnElement = $("#likebtn"+postidreal+ " span");
+				if($(btnElement).hasClass("glyphicon-thumbs-up")){
+					console.log("Has a thumbs up");
+					spanToInclude = "<span class=\"glyphicon likecustomicon glyphicon-thumbs-down\"></span>";
+				} else{
+					console.log("Has a thumbs down");
+					spanToInclude = "<span class=\"glyphicon likecustomicon glyphicon-thumbs-up\"></span>"
+				}
 				// post can be retrieved from the database
 				//disable
-				$('.likecustomicon').remove();
-				$('#likebtn'+postidreal).prepend("<span class=\"glyphicon likecustomicon glyphicon-thumbs-down\"></span>");
+				$('#likebtn'+postidreal+' .likecustomicon').remove();
+				$('#likebtn'+postidreal).prepend(spanToInclude);
 				var likeObj = {};
 				likeObj.postId = postidreal;
 				likeObj.userId = userId;
@@ -149,7 +155,7 @@ $(function() {
 				$.post(rootPath + "comments", JSON.stringify(commentObj)).done(
 						commentsuccess).fail(ajaxfailure);
 				$('#newcommentDiv' + postidreal).empty(); // clear
-				$('#newcommentDiv' + postidreal).hide(); // hide
+				//$('#newcommentDiv' + postidreal).hide(); // hide
 				// make the post appear in the comments box
 				/* $('#commentdiv'+postidreal).append(comment); */
 			});
@@ -160,8 +166,8 @@ $(function() {
 		var postidreal = parseInt(postid.substring(11));
 		// show the comment box down
 		$('#newcommentDiv' + postidreal).show();
-		$('#newcommentbutton-'+postidreal).prepend("<span class=\"glyphicon glyphicon-save\"></span>");
-	});
+/*		$('#newcommentbutton-'+postidreal).prepend("<span class=\"glyphicon glyphicon-save\"></span>");
+*/	});
 	
 	//handle notification of a new post
 	setInterval(checkfornewpost, 130000);
@@ -174,27 +180,58 @@ $(function() {
 		loadRidePosts();
 	})
 	
+	//age validation section
+	
+	var agealert;
+	
+/*	$("#agelimitdiv").datepicker();
+*/	$('#dob')
+			.on(
+					'change',
+					function() {
+
+						var agelimit = 18;
+						var enteredValue = $(this).val();
+						var enteredAge = getAge(enteredValue);
+						if (enteredAge < agelimit) {
+							// enteredValue.focus();
+							$('#agelimitdiv').append("<p> <em style = \"color: red\"> Your age must be above 18 years"+
+									 "</em></p>");
+							
+							agealert.appendTo('#agelimitdiv');
+							return false;
+						}
+					});
 	
 });
 
-function loadDriverPosts() {
-	$.get(rootPath + "postperpage/10?posttype=\"DRIVE\"").done(
-			perpagesuccessdrive).fail(ajaxfailure);
+function loadDriverPosts(maxDrivePostIdRequested) {
+	$('#loadingcomponent').show();
+	$.get(rootPath + "postperpage/"+ maxDrivePostIdRequested +"?posttype=DRIVE").done(
+			perpagesuccessdrive).fail(ajaxfailure).always(hideAjaxLoader);
 }
-function loadRidePosts() {
-	$.get(rootPath + "postperpage/10?posttype=\"RIDE\"")
-			.done(perpagesuccessride).fail(ajaxfailure);
+function loadRidePosts(maxRidePostIdRequested) {
+	$('#loadingcomponent').show();
+	$.get(rootPath +"postperpage/"+ maxRidePostIdRequested +"?posttype=RIDE")
+			.done(perpagesuccessride).fail(ajaxfailure).always(hideAjaxLoader);
 }
 function perpagesuccessdrive(data) {
 	var posts = JSON.parse(data);
 	var wrapper = $('#tabs-2');
+	var postssize = posts.length;
+	let drivepostid;
+	//if no posts returned upon scrolling, do nothing
+	if(postssize <= 0){
+		return;
+	}
 	$
 			.each(
 					posts,
 					function(i, post) {
-						wrapper.append("<div  id='postdiv" + post.postId + "'"
+						drivepostid = post.postId;
+						wrapper.append("<div  id='postdiv" + drivepostid + "'"
 								+ " class = \"postsection\"></div>");
-						var currentDiv = $('#postdiv' + post.postId);
+						var currentDiv = $('#postdiv' + drivepostid);
 						currentDiv.append("<p><strong> Drive with " + post.user.fullName
 								+ "</strong>"
 								+ "</p><p>" + post.postText + "</p>");
@@ -204,7 +241,7 @@ function perpagesuccessdrive(data) {
 
 						var commentbtn = $('<button/>').attr({
 							type : "button",
-							id : post.postId,
+							id : drivepostid,
 							value : 'commentsdd',
 							'class' : 'btn btn-default commentbtn',
 							'aria-label':'Left Align'
@@ -212,13 +249,13 @@ function perpagesuccessdrive(data) {
 						commentbtn.prepend("<span class=\"glyphicon glyphicon-comment\"></span>");
 						var deletebtn = $('<input/>').attr({
 							type : "button",
-							id : "delete-" + post.postId,
+							id : "delete-" + drivepostid,
 							value : 'delete',
 							'class' : 'deletebtn'
 						});
 						var deletebtn = $('<button/>').attr({
 							type : "button",
-							id : "delete-" + post.postId,
+							id : "delete-" + drivepostid,
 							value : 'delete',
 							'class' : 'btn btn-default deletebtn',
 							'aria-label':'Left Align'
@@ -226,7 +263,7 @@ function perpagesuccessdrive(data) {
 						deletebtn.prepend("<span class=\"glyphicon glyphicon-remove\"></span>");
 						var newcommentbtn = $('<button/>').attr({
 							type : "button",
-							id : "newcomment-" + post.postId,
+							id : "newcomment-" + drivepostid,
 							value : 'New comment',
 							'class' : 'btn btn-default newcomment',
 							'aria-label':'Left Align'
@@ -234,62 +271,81 @@ function perpagesuccessdrive(data) {
 						newcommentbtn.prepend("<span class=\"glyphicon glyphicon-plus\"></span>");
 
 						// make the above button a link for the modal to work
-
+						var commentBoxHolder = "<"
 						var commentBox = "<div  id='newcommentDiv"
-								+ post.postId
+								+ drivepostid
 								+ "'"
 								+ " class = \"newcommentsection\">"
 								+ ""
 								+ "<textarea rows = 3  id = 'commenttext-"
-								+ post.postId
+								+ drivepostid
 								+ "'"
 								+ " class = \"commenttextsection\"></textarea><br>"
-								+ "<input type = 'button' value = \"Add comment\" id = 'newcommentbutton-"
-								+ post.postId + "'"
-								+ " class = \"commentbuttonsection\"/>"
+								+ "<button value = \"Add comment\" aria-label=\"Left Align\" id = 'newcommentbutton-"
+								+ drivepostid + "'"
+								+ " class = \"commentbuttonsection btn btn-default\">"
+								+ "<span class=\"likecustomicon glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>"
+								+"</button>"
 								+ "</div>";
 						currentDiv.append(commentbtn);
 						currentDiv.append(deletebtn);
 						currentDiv.append(newcommentbtn);
 						currentDiv.append(commentBox);
-						currentDiv.append("<div  id='commentdiv" + post.postId
+						currentDiv.append("<div  id='commentdiv" + drivepostid
 								+ "'" + " class = \"commentsection\"></div>");
-						currentDiv.append("<div  id='likediv" + post.postId
+						currentDiv.append("<div  id='likediv" + drivepostid
 								+ "'" + " class = \"likesection\"></div>");
 						currentDiv
 								.append("<div  id='likecount"
-										+ post.postId
+										+ drivepostid
 										+ "'"
 										+ " class = \"likecount\"> "
 										+ "<button type = \"button\" class = \"likeaction btn btn-default\" aria-label=\"Left Align\"id = 'likebtn"
-										+ post.postId + "' value = \"Like\" >"
+										+ drivepostid + "' value = \"Like\" >"
 										+ "<span class=\"glyphicon likecustomicon glyphicon-thumbs-up\" aria-hidden=\"true\"></span>"
 										+"</button>"
 										+ " </div>");
 						currentDiv.append("<hr>");
 						wrapper.append(currentDiv);
-
-						$.get(rootPath + "postlikes/" + post.postId).success(
+						$.get(rootPath + "postlikes/" + drivepostid).success(
 								function(likes) {
 									var likesJson = JSON.parse(likes);
-									$('#likediv' + post.postId).append(
-											likesJson.totallikes + " travelers are interested by this ride post");
-								}).error(function() {
+									$('#likediv' + drivepostid).append(
+											likesJson.totallikes);
+								}).error(function(error) {
 							console.log(error);
 						});
+						maxDrivePostIdRequested = drivepostid;
 					});
+	
 	$('.newcommentsection').hide(); // hide after all is loaded
+	if(userId.length == 0){
+		$('.deletebtn').remove();
+		$('.newcomment').remove();
+		$('.likeaction').remove();
+		$('.btn-primary').remove();
+		$('#myModal').remove();
+	}
 }
 function perpagesuccessride(data) {
 	var posts = JSON.parse(data);
 	var wrapper = $('#tabs-1');
+	let ridepostid;
+	var postsSize = posts.length;
+	//if no posts returned upon scrolling, do nothing
+	if(postsSize <= 0){
+		console.log("Posts size is: "+ postsSize);
+		console.log("maxRidePostIdRequested is: "+ maxRidePostIdRequested);
+		return;
+	}
 	$
 			.each(
 					posts,
 					function(i, post) {
-						wrapper.append("<div  id='postdiv" + post.postId + "'"
+						ridepostid = post.postId;
+						wrapper.append("<div  id='postdiv" + ridepostid + "'"
 								+ " class = \"postsection\"></div>");
-						var currentDiv = $('#postdiv' + post.postId);
+						var currentDiv = $('#postdiv' + ridepostid);
 						currentDiv.append("<p><strong> Ride needed by  " + post.user.fullName
 								+  "</strong>" + "</p><p>"
 								+ post.postText + "</p>");
@@ -299,7 +355,7 @@ function perpagesuccessride(data) {
 
 						var commentbtn = $('<button/>').attr({
 							type : "button",
-							id : post.postId,
+							id : ridepostid,
 							value : 'commentsdd',
 							'class' : 'btn btn-default commentbtn',
 							'aria-label':'Left Align'
@@ -307,7 +363,7 @@ function perpagesuccessride(data) {
 						commentbtn.prepend("<span class=\"glyphicon glyphicon-comment\"></span>");
 						var deletebtn = $('<button/>').attr({
 							type : "button",
-							id : "delete-" + post.postId,
+							id : "delete-" + ridepostid,
 							value : 'delete',
 							'class' : 'btn btn-default deletebtn',
 							'aria-label':'Left Align'
@@ -315,7 +371,7 @@ function perpagesuccessride(data) {
 						deletebtn.prepend("<span class=\"glyphicon glyphicon-remove\"></span>");
 						var newcommentbtn = $('<button/>').attr({
 							type : "button",
-							id : "newcomment-" + post.postId,
+							id : "newcomment-" + ridepostid,
 							value : 'New comment',
 							'class' : 'btn btn-default newcomment',
 							'aria-label':'Left Align'
@@ -325,49 +381,53 @@ function perpagesuccessride(data) {
 						// make the above button a link for the modal to work
 
 						var commentBox = "<div  id='newcommentDiv"
-								+ post.postId
+								+ ridepostid
 								+ "'"
 								+ " class = \"newcommentsection\">"
 								+ ""
 								+ "<textarea rows = 3  id = 'commenttext-"
-								+ post.postId
+								+ ridepostid
 								+ "'"
 								+ " class = \"commenttextsection\"></textarea><br>"
-								+ "<input type = 'button' value = \"Add comment\" id = 'newcommentbutton-"
-								+ post.postId + "'"
-								+ " class = \"commentbuttonsection\"/>"
+								+ "<button value = \"Add comment\" aria-label=\"Left Align\" id = 'newcommentbutton-"
+								+ ridepostid + "'"
+								+ " class = \"commentbuttonsection btn btn-default\">"
+								+ "<span class=\"likecustomicon glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>"
+								+"</button>"
 								+ "</div>";
 
 						currentDiv.append(commentbtn);
 						currentDiv.append(deletebtn);
 						currentDiv.append(newcommentbtn);
 						currentDiv.append(commentBox);
-						currentDiv.append("<div  id='commentdiv" + post.postId
+						currentDiv.append("<div  id='commentdiv" + ridepostid
 								+ "'" + " class = \"commentsection\"></div>");
-						currentDiv.append("<div  id='likediv" + post.postId
+						currentDiv.append("<div  id='likediv" + ridepostid
 								+ "'" + " class = \"likesection\"></div>");
 						currentDiv
 								.append("<div  id='likecount"
-										+ post.postId
+										+ ridepostid
 										+ "'"
 										+ " class = \"likecount\"> "
 										+ "<button type = \"button\" class = \"likeaction btn btn-default\" aria-label=\"Left Align\"id = 'likebtn"
-										+ post.postId + "' value = \"Like\" >"
+										+ ridepostid + "' value = \"Like\" >"
 										+ "<span class=\"glyphicon likecustomicon glyphicon-thumbs-up\" aria-hidden=\"true\"></span>"
 										+"</button>"
 										
 										+ " </div>");
 						currentDiv.append("<hr>");
 						wrapper.append(currentDiv);
-						$.get(rootPath + "postlikes/" + post.postId).success(
+						$.get(rootPath + "postlikes/" + ridepostid).success(
 								function(likes) {
 									var likesJson = JSON.parse(likes);
-									$('#likediv' + post.postId).append(
-											likesJson.totallikes + " drivers are interested by this post ");
+									$('#likediv' + ridepostid).append(
+											likesJson.totallikes);
 								}).error(function() {
 							console.log(error);
 						});
+						maxRidePostIdRequested = ridepostid;
 					});
+	
 	$('.newcommentsection').hide(); // hide after all is loaded
 
 	//authenticate some components, could be optimized better
@@ -378,9 +438,7 @@ function perpagesuccessride(data) {
 		$('.btn-primary').remove();
 		$('#myModal').remove();
 	}
-	//
-	$('.commentbuttonsection').prepend("<span class=\"glyphicon glyphicon-save\"></span>");
-	
+	//	
 }
 function commentsSuccess(commentsResult) {
 	var comments = JSON.parse(commentsResult);
@@ -397,7 +455,6 @@ function ajaxfailure(error) {
 	console.log(error)
 }
 function likesuccess(data) {
-
 	var jsonData = JSON.parse(data);
 	updateLikeCount(parseInt(jsonData.post.postId));
 	console.log("successfully added a like")
@@ -406,7 +463,7 @@ function updateLikeCount(postid) {
 	$('#likediv' + postid).empty();
 	$.get(rootPath + "postlikes/" + postid).success(function(likes) {
 		var likesJson = JSON.parse(likes);
-		$('#likediv' + postid).append("#Likes:" + likesJson.totallikes);
+		$('#likediv' + postid).append(likesJson.totallikes);
 	}).error(function() {
 		console.log(error);
 	});
@@ -430,9 +487,6 @@ function checkfornewpost(){
 	$.get(rootPath + "postcount").success(function(data){
 		var dataObj = JSON.parse(data);
 		var receivedPosts = dataObj.numberofposts;
-		console.log(receivedPosts);
-		console.log("when time reached, previous posts is "+ availablenumberofposts);
-		console.log("The new number of post is"+ receivedPosts)
 		if(availablenumberofposts < receivedPosts){
 			console.log("We have got a new post");
 			$('#postnotifier').show();
@@ -445,9 +499,26 @@ function checkfornewpost(){
 	})
 	
 }
+//show ajax loader
+function hideAjaxLoader(){
+	$('#loadingcomponent').delay(2000).hide();
+}
 
-/*$(window).scroll(function() {
+$(window).scroll(function() {
 	if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-		loadRidePosts();
+		//retrieve 
+		loadDriverPosts(maxDrivePostIdRequested);
+		loadRidePosts(maxRidePostIdRequested);
 	}
-});*/
+});
+//validating age
+function getAge(DOB) {
+	var today = new Date();
+	var birthDate = new Date(DOB);
+	var age = today.getFullYear() - birthDate.getFullYear();
+	var m = today.getMonth() - birthDate.getMonth();
+	if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+		age--;
+	}
+	return age;
+}

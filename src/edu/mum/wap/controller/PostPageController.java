@@ -22,16 +22,18 @@ public class PostPageController extends HttpServlet {
 			throws ServletException, IOException {
 		String postType = request.getParameter("posttype");
 		int pageSize = Integer.valueOf(request.getPathInfo().substring(1));
+		System.out.println("post id is: "+ pageSize);
+		System.out.println("Post type is: "+ postType);
 		IPostService postService = new PostServiceImpl();
 		List<Posts> posts = null;
-		if(postType.trim().equals("\"DRIVE\"")){
+		if(postType.trim().equals("DRIVE")){
 			try {
 				posts = postService.getDrivePostPerPage(pageSize);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		} 
-		if(postType.trim().equals("\"RIDE\""))
+		if(postType.trim().equals("RIDE"))
 		{
 			try {
 				posts = postService.getRidePostPerPage(pageSize);

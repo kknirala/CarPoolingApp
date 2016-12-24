@@ -28,3 +28,11 @@
 .likesection{
 	font-style: italic;
 }
+#agelimitdiv{
+	margin-left: 200px;
+}
+#loadingcomponent{
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+}
